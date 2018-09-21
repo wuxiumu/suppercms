@@ -1,0 +1,29 @@
+ <?php  include  site_url('admin/Login/menu_head'); ?>
+<body onselectstart="return false;" ondragstart="return false;" oncontextmenu="return false;">
+<div style="float: left" id="my_menu" class="sdmenu">
+  <div class="collapsed">
+    <span>题型管理</span>
+    <a href="<?php echo site_url('admin/exam/masterBasicQuesType');?>" target="mainFrame" onFocus="this.blur()">题型列表</a>
+    <a href="<?php echo site_url('admin/exam/masterBasicAddQuesType');?>" target="mainFrame" onFocus="this.blur()">添加题型</a>
+  </div>
+  <div class="collapsed">
+    <span>科目管理</span>
+    <a href="<?php echo site_url('admin/exam/subject');?>" target="mainFrame" onFocus="this.blur()">科目列表</a>
+    <a href="<?php echo site_url('admin/exam/addSubject');?>" target="mainFrame" onFocus="this.blur()">添加科目</a>
+  </div>  
+  <div class="collapsed">
+    <span>试题管理</span>
+    <a href="<?php echo site_url('admin/exam/questions/all');?>" target="mainFrame" onFocus="this.blur()">试题列表</a>
+    <a href="<?php echo site_url('admin/exam/addQuestion/all');?>" target="mainFrame" onFocus="this.blur()">添加试题</a>
+  </div>
+  <div class="collapsed">
+    <span>试卷管理</span>
+    <a href="<?php echo site_url('admin/exam/exams');?>" target="mainFrame" onFocus="this.blur()">试卷列表</a>
+    <a href="<?php echo site_url('admin/exam/addAutopage');?>" target="mainFrame" onFocus="this.blur()">随机组卷</a>
+    <a href="<?php echo site_url('admin/exam/addSelfPage');?>" target="mainFrame" onFocus="this.blur()">手工组卷</a>
+    <a href="<?php echo site_url('admin/exam/addSelfPage');?>" target="mainFrame" onFocus="this.blur()">导入组卷</a>
+  </div>  
+  
+</div>
+</body>
+</html>

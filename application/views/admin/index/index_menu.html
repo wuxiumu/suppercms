@@ -1,0 +1,39 @@
+ <?php include  site_url('admin/Login/menu_head'); ?>
+<body onselectstart="return false;" ondragstart="return false;" oncontextmenu="return false;"  >
+<div id="left-top">
+	<!--<div><img src="<?php echo base_url(ADMIN_RES_PATH.'images/main/member.gif');?>" width="44" height="44" /></div>-->
+    <span>用户： <?php echo $_SESSION["admin_session"]["admin_name"];?><br>
+    角色： <?php echo $_SESSION["admin_session"]["admin_groupname"];?></span>
+
+</div>
+
+    <div style="float: left" id="my_menu" class="sdmenu">
+      <div class="collapsed">
+         
+        <span>系统设置</span>
+    
+        <a onclick="top.mainFrame.location='<?php echo site_url('admin/Base/base_sysinfo');?>';" onfocus="this.blur()" style="cursor:pointer;">系统信息</a>
+        <a onclick="top.mainFrame.location='<?php echo site_url('admin/Base/base_view');?>';" onfocus="this.blur()" onmouseover="this.style.cursor='pointer'">基本设置</a>
+        <a onclick="top.mainFrame.location='<?php echo site_url('admin/Filemanager/table');?>';" onfocus="this.blur()" onmouseover="this.style.cursor='pointer'">文件管理</a>
+          
+      </div>
+    </div>
+
+   <!--  2018-06-22 10:19:29
+cursor:pointer; 或 cursor:hand; 手型 
+cursor:crosshair; 十字 
+cursor:text; 文本 
+cursor:wait; 等待 
+cursor:help; 问号 
+cursor:e-resize;e 右的箭头 
+cursor:ne-resize; 右上的箭头 
+cursor:n-resize; 上的箭头 
+cursor:nw-resize; 左上的箭头 
+cursor:w-resize; 左的箭头 
+cursor:sw-resize; 左下的箭头 
+cursor:s-resize; 下的箭头 
+cursor:se-resize; 右下的箭头 
+cursor:move; 移动 -->
+
+</body>
+</html>

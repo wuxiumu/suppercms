@@ -1,0 +1,117 @@
+<?php include  site_url('admin/Login/main_head');  ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：科目管理
+      <div class="js_refresh" onclick="history.go(-1)">返回</div>
+      <div class="js_refresh" onclick="location.reload()">刷新</div>    
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+        <tr>
+          <td width="10%" align="center" valign="middle" style="text-align:right; width:150px;"><a href="<?php echo site_url('admin/exam/addSubject');?>" target="mainFrame" onFocus="this.blur()" class="add">添加科目</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+        <tr>
+          <th align="center" valign="middle" class="borderright">科目ID</th>
+          <th align="center" valign="middle" class="borderright">科目</th>
+          <th align="center" valign="middle" class="borderright">科目题型</th>
+          <th align="center" valign="middle">操作</th>
+        </tr>
+        <?php foreach ($subject as $item): ?>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['id']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['name']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['name']?></td>
+            
+            <td align="center" valign="middle" class="borderbottom" id="<?php echo $item['id']?>">
+              <a href="javascript:;"  class="js_jump">章节列表</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <a href="javascript:;"  class="js_update">编辑</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <a href="javascript:;" class="js_display">
+              <?php  if($item['display']=='1'){ echo "正常"; }else{ echo "禁用"; } ?>
+              </a>
+              <span class="gray">&nbsp;|&nbsp;</span>              
+              <a href="javascript:;" class="js_delete">删除</a></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- Javascript Libraries -->
+        <script type="text/javascript">            
+        $(".js_update").click(function(){  
+            var _this=$(this);
+    		    var id=_this.parent().attr("id");
+    		    window.location="<?php echo site_url('admin/exam/updateSubject/');?>"+id;
+  		  });
+        $(".js_jump").click(function(){  
+            var _this=$(this);
+            var id=_this.parent().attr("id");
+            window.location="<?php echo site_url('admin/exam/sections/');?>"+id;
+        });
+        
+        $(".js_display").click(function(){  
+                var _this=$(this);
+				var id = _this.parent().attr("id");
+				var text = _this.html().trim();
+			    $.ajax({  
+			     url:'<?php echo site_url("admin/exam/masterBasicDelSubject/");?>'+id,   
+			     type:'POST', 
+			     data:{
+			     	'id':id,
+	          		'action':'display'
+	          	 }, 
+			     dataType:'json', 
+			     async : false, //默认为true 异步  
+			     success:function(data){  
+			     	if(data=='1'){
+			     		if(text=='正常'){
+			     			_this.html('禁用');
+			     		}else{
+			     			_this.html('正常');
+			     		}
+			     	}
+			     }				     
+			   });               
+        });
+        $(".js_delete").click(function(){  
+			var r=confirm("删除前请确认"); 
+			if (r==true){ 
+			    //执行
+			}else{ 
+			    return false;//取消
+			}
+            var _this=$(this);
+			var id=_this.parent().attr("id");
+		    $.ajax({  
+		     url:'<?php echo site_url("admin/exam/masterBasicDelSubject/");?>'+id,   
+		     type:'POST', 
+		     data:{
+		     	'id':id,
+          		'action':'delete'
+          	 }, 
+		     dataType:'json', 
+		     async : false, //默认为true 异步  
+		     success:function(data){  
+		     	if(data=='1'){
+		     		_this.parent().parent().remove();
+		     	}
+		     }				     
+		   });              
+        });            
+        </script>
+</body>
+</html>

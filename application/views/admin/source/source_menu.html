@@ -1,0 +1,23 @@
+<?php  include  site_url('admin/Login/menu_head'); ?>
+<body onselectstart="return false;" ondragstart="return false;" oncontextmenu="return false;">
+<div style="float: left" id="my_menu" class="sdmenu">
+    <div class="collapsed">
+        <span>素材管理</span>
+        <a onclick="top.mainFrame.location='<?php echo site_url('admin/source/table/0');?>';" onfocus="this.blur()" style="cursor:pointer;">素材列表</a> 
+    </div>	
+    <div class="collapsed">
+        <span>文章类别</span>
+        <?php foreach ($column as $item): ?>
+           		 <?php if($item['type_id']=='2'){?>
+            	 <a onclick="top.mainFrame.location='<?php echo site_url('/admin/source/table/').$item['id'];?>';" onfocus="this.blur()" style="cursor:pointer;">
+        	
+        		<?php echo $item['title'];?></a>
+        
+        		<?php }?>
+        <?php endforeach; ?>
+
+
+     </div>	
+</div>
+</body>
+</html>

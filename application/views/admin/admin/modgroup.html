@@ -1,0 +1,130 @@
+<?php
+    include  site_url('admin/Login/main_head');
+ ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+<style>
+.ys_table{
+  float:left;
+  width:100%;
+}
+
+.ys_thead{
+  width:100%;
+  padding:10px 0;
+  background-color:#e5e5e5;
+}
+
+.ys_tbody{
+  padding:10px 0 10px 20px;
+  overflow:hidden;
+}
+
+.ys_thead .ys_th,
+.ys_tbody .ys_td{
+  height:30px;
+  padding:0 10px;
+  line-height:30px;
+}
+
+.ys_thead .ys_th{
+  
+}
+
+.ys_tbody .ys_td{
+  float:left;
+  
+}
+
+.ys_thead .ys_th input[type="checkbox"],
+.ys_tbody .ys_td input[type="checkbox"]{
+  float:left;
+  margin-top:8px;
+}
+
+
+
+
+</style>
+
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：角色组管理&nbsp;&nbsp;>&nbsp;&nbsp;添加后台管理员组
+          <div class="js_refresh" onclick="history.go(-1)">返回</div>
+          <div class="js_refresh" onclick="location.reload()">刷新</div>      
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <form method="post" action="<?php echo site_url('admin/admingroup/update');?>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">组名：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="groupname" value="<?php echo $groupname;?>" class="text-word">
+               
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">描述：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="description" value="<?php echo $description;?>" class="text-word">              
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">权限：</td>
+            <td class="borderright borderbottom">
+              <div class="ys_table">
+              
+                    <div class="ys_thead">
+                        <div class="ys_th">
+                            <label class="ys_th_label">
+                                <input type="checkbox" value="100">&nbsp;编辑</label>
+                        </div>
+                    </div>
+                    <div class="ys_tbody"> 
+                        <div class="ys_td">
+                            <label>
+                                <input type="checkbox" class="node_100" name="auth[]" value="104" title="编辑" checked="">&nbsp; 编辑</label>
+                        </div>                      
+                    </div>      
+            </div></td>
+          </tr>
+         
+			</tr>  
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">&nbsp;</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input name="id" type="hidden" value="<?php echo $id;?>">
+              <input name="" type="submit" value="提交" class="text-but">
+              <input name="" type="reset" value="重置" class="text-but"></td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+<script>
+$(".ys_thead").each(function () {
+  var _this = $(this);
+  var dfl_val = _this.find(".ys_th_label input").val();
+  if (dfl_val==400 || dfl_val==500){
+    _this.next(".ys_tbody").find("input[type='checkbox']").prop("checked", true);
+  }
+  _this.find(".ys_th_label").click(function(){
+    if (_this.find("input[type='checkbox']").is(":checked")) { // 全选 
+    
+      _this.next(".ys_tbody").find("input[type='checkbox']").prop("checked", true);
+      
+    } else { // 取消全选 
+    
+      _this.next(".ys_tbody").find("input[type='checkbox']").prop("checked", false);
+        
+    }
+  })
+})
+</script>
+</body>
+</html>

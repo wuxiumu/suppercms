@@ -1,0 +1,165 @@
+<?php  include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/bootstrap.min.css');?>" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/public/admin_res_path/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resource/layui/layui.all.js"></script>
+<link rel="stylesheet" href="/resource/layui/css/layui.css"  media="all">
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">
+         
+    </td>
+  </tr>
+ 
+  <tr>
+    <td align="left" valign="top">
+      <div class="modal-content">
+		    <div class="modal-header">
+                <div class="js_refresh" onclick="location.reload()">刷新</div>  
+		        <h3> 您的位置：试题详情 </h3>
+		    </div>
+		    <div class="modal-body" id="modal-body">
+		        <table class="table table-hover">
+		            <tbody>
+		                <tr>  <td> <b>普通试题</b> </td> </tr>
+		                <?php $ii=1;foreach ($questions as $item): ?>
+		                <tr id="selectedq_<?php $i=$ii++;echo $i;?>">
+		                    <td>
+		                        <table>
+		                            <tbody>
+		                                <tr>
+		                                    <td width="80">
+		                                        <label class="checkbox-inline">
+		                                            <input class="js_sele_change_ids" type="checkbox"  name="ids[]" value="<?php echo $item['id'];?>"   checked="" >第<?php echo $i;?>题</label>
+		                                    </td>
+		                                    <td>&nbsp;</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>知识点：</td>
+		                                    <td>		                                    
+		                                     <?php foreach ($item['knows_id'] as $it): ?>
+		                                     	 &nbsp;<?php echo $it['name']; ?>,
+		                                     <?php endforeach; ?>
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <td>标题：</td>
+		                                    <td><?php echo $item['question']?></td>
+		                                </tr>
+		                                <tr>
+		                                    <td>备选项：</td>
+		                                    <td><?php echo $item['select']?></td>
+		                                </tr>
+		                                <tr>
+		                                    <td>答案：</td>
+		                                    <td><?php echo $item['answer']?></td>
+		                                </tr>
+		                                <tr>
+		                                    <td>解析：</td>
+		                                    <td><?php echo $item['description']?></td>
+		                                </tr>
+		                                <tr>
+		                                    <td>难度：</td>
+		                                    <td><?php echo $item['level']?>&nbsp;</td>
+		                                </tr>
+		                            </tbody>
+		                        </table>
+		                    </td>
+		                </tr>
+		                <?php endforeach; ?>
+		                 
+		            </tbody>
+		        </table>
+		    </div>
+		    <div class="modal-footer">
+		        <button aria-hidden="true" class="btn btn-primary" data-dismiss="modal" onclick="determine()">完成</button>
+		    </div>
+		</div>
+    </td>
+  </tr>
+</table>
+<script type="text/javascript">
+        $(".js_sele_change_ids").click(function(){  
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+ 			var _value=GetQueryString("canshu");
+ 			var _ids  =GetQueryString("ids");
+        	var clss_name='ids[]'; 
+            var id=show_id(clss_name);
+
+    		var _this=$(this);
+    		var id_value =_this.val();
+    		if( _this.checked==true){
+    			console.log(id);
+    		}else{
+    			//试题id
+            	var se_id='#iselectquestions_'+_value;
+            	var se_id_='#iselectrowsquestions_'+_value;
+            	var ialreadyselectnumber='#ialreadyselectnumber_'+_value;
+            	//试题个数
+            	var num = id.length;  
+            	parent.$(ialreadyselectnumber).html(num);
+ 
+    			var questions=parent.$(se_id_).val()
+            	if(questions==''){
+            	  questions=','+id+',';
+            	}else{
+	              questions = ','+id+',';
+            	}
+            	console.log(questions);
+            	parent.$(se_id).val(questions);
+            	parent.$(se_id_).val(questions); 
+    			/*console.log(id);*/
+    			/*questions=parent.$(se_id_).val()+id+',';
+    			parent.$(se_id_).val(questions);  */
+    			/*console.log(id);
+    			var questions=parent.$(se_id_).val();
+    			questions=parent.$(se_id_).val()+id+',';
+    			parent.$(se_id).val(questions);
+            	parent.$(se_id_).val(questions);  */  
+    		}
+    		
+        });
+        //确定
+        function determine(){
+			//关闭父级窗口
+			var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);  
+  		} 	
+	  	//转数组
+  		function str_explode(s){
+			ss = s.split(",");// 在每个逗号(,)处进行分解  ["abc", "abcd", "aaa"]
+ 			return ss;
+  		}
+  		//去空
+  		function removeDuplicatedItem(ar) {
+		  var ret = [];
+		  for (var i = 0, j = ar.length; i < j; i++) {
+		    if (ret.indexOf(ar[i]) === -1) {
+		      ret.push(ar[i]);
+		    }
+		  }
+		  return ret;
+		}
+  		//获取选中id     
+        function show_id(clss_name){
+        	obj = document.getElementsByName(clss_name);
+        	check_val = [];
+        	for(k in obj){
+        		if(obj[k].checked){
+        			check_val.push(obj[k].value);
+        		}
+        	}
+        	return check_val;        	
+        } 
+        function GetQueryString(name)
+        {
+             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+             var r = window.location.search.substr(1).match(reg);
+             if(r!=null)return  unescape(r[2]); return null;
+        }         
+</script>
+</body>
+</html>

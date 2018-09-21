@@ -1,0 +1,100 @@
+<?php
+    include  site_url('admin/Login/main_head');
+ ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：用户管理</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search" style="display:none;">
+        <tr>
+          <td width="90%" align="left" valign="middle">
+            <form method="post" action="">
+              <span>用户员：</span>
+              <input type="text" name="" value="" class="text-word">
+              <input name="" type="button" value="查询" class="text-but">
+            </form>
+          </td>
+          <td width="10%" align="center" valign="middle" style="text-align:right; width:150px;"><a href="<?php echo site_url('admin/User/user_add');?>" target="mainFrame" onFocus="this.blur()" class="add">新增用户</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+        <tr>
+          <th align="center" valign="middle" class="borderright">ID号</th>
+          <th align="center" valign="middle" class="borderright">用户名</th>
+          <th align="center" valign="middle" class="borderright">产品意见</th>
+          <th align="center" valign="middle" class="borderright">网站意见</th>
+          <th align="center" valign="middle" class="borderright">提交时间</th>
+          <th align="center" valign="middle">操作</th>
+        </tr>
+
+        <?php foreach ($proposal as $item): ?>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['id']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom">
+            <?php  $user= $this->db ->select('*') 
+    					->where(array('id'=>$item['userid']))
+    					->from('user') 
+    					->get() 
+    					->result_array();?>
+             <?php if($user){?>
+                 <?php echo $user[0]['username'];?>
+                 <?php }?>
+            </td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php  echo $item["product_opinion"];  ?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['web_opinion']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo date("Y-m-d H:i:s", $item['creat_time']);?></td>
+            <td align="center" valign="middle" class="borderbottom">
+              <a href="<?php echo site_url('admin/User/proposal_info').'/'. $item['id'];?>" target="mainFrame" onFocus="this.blur()" class="add">查看</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <input type="hidden" value="<?php  echo $item["id"];  ?>">
+              <a href="javascript:;" class="proposal_del">删除</a></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="m-page"><?php echo $links;?></td>
+  </tr>
+</table>
+</body>
+<script>
+$(".proposal_del").click(function() {  
+	var _this = $(this);
+	var id=_this.prev().val();
+	$.ajax({
+		 url:'<?php echo site_url('admin/user/proposal_del');?>',
+		 type:'post',  
+	       data:{
+	         "status":"proposal_del",
+	         "id":id,
+	       },  
+      dataType:'json', 
+      async : false, //默认为true 异步  
+	   success:function(data){
+		   console.log(data);
+			  if(data==1){
+				  _this.parent().parent().remove();
+				  console.log('删除成功');
+			}else{
+				alert('删除失败');
+			}  
+		}
+	})
+})
+
+ 
+
+</script>
+</html>

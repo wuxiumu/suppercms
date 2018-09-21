@@ -1,0 +1,18 @@
+ <?php
+    include  site_url('admin/Login/menu_head');
+ ?>
+<body onselectstart="return false;" ondragstart="return false;" oncontextmenu="return false;">
+<div style="float: left" id="my_menu" class="sdmenu">
+<!--   <div class="collapsed">
+    <span>权限管理</span>
+    <a href="<?php echo site_url('admin/authority/main_class');?>" target="mainFrame" onFocus="this.blur()">权限组列表</a>
+    <a href="<?php echo site_url('admin/authority/main_node');?>" target="mainFrame" onFocus="this.blur()">权限列表</a>
+  </div>	 -->
+  <div class="collapsed">
+    <span>角色管理</span> 
+    <a onclick="top.mainFrame.location='<?php echo site_url('admin/admin/table/0');?>';" onfocus="this.blur()" style="cursor:pointer;">列表</a> 
+    <a onclick="top.mainFrame.location='<?php echo site_url('admin/admingroup/table/0');?>';" onfocus="this.blur()" style="cursor:pointer;">组管理</a>
+  </div>
+</div>
+</body>
+</html>

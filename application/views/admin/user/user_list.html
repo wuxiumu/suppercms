@@ -1,0 +1,90 @@
+<?php
+    include  site_url('admin/Login/main_head');
+ ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：用户管理</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+        <tr>
+          <td width="90%" align="left" valign="middle">
+               &nbsp;&nbsp;商户： 
+                <?php ?>
+                <?php $get_merchant=$this->db ->select('id,truename') 
+                                ->where(array('status'=>'1')) 
+                                ->from('merchant') 
+                                ->get() 
+                                ->result_array(); 
+                ?> 
+                <select  id="sel" class="sel_class" name="mid">
+                <option value="0" title="----" selected="">全部</option>
+                <?php foreach ($get_merchant as $item): ?>
+                <option value="<?php echo $item['id'];?>" title="<?php echo $item['id'];?>" <?php if($item['id']==$mid){ echo "selected";}?>>
+                <?php echo $item['truename'];?>
+                </option>
+                <?php endforeach; ?> 
+                </select>
+          </td>
+          <script type="text/javascript">
+                  var sel=document.getElementById("sel");
+                  var sel_class=document.getElementById("sel_class");
+                  sel.onchange=function(){
+                    var gid=this.options[this.selectedIndex].value;
+                          window.location="/index.php/admin/User/user_list/pid/"+gid;
+                  }
+          </script>
+          <!-- <td width="90%" align="left" valign="middle">
+            <form method="post" action="">
+              <span>用户员：</span>
+              <input type="text" name="username" value="" class="text-word">
+              <input type="submit" value="查询" class="text-but">
+            </form>
+          </td> -->
+          <td width="10%" align="center" valign="middle" style="text-align:right; width:150px;"><a href="<?php echo site_url('admin/User/user_add');?>" target="mainFrame" onFocus="this.blur()" class="add">新增用户</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+        <tr>
+          <th align="center" valign="middle" class="borderright">ID号</th>
+          <th align="center" valign="middle" class="borderright">用户名</th>
+          <th align="center" valign="middle" class="borderright">用户真实姓名</th>
+          <th align="center" valign="middle" class="borderright">用户电话</th>
+          <th align="center" valign="middle" class="borderright">用户注册时间</th>
+          <th align="center" valign="middle">操作</th>
+        </tr>
+
+        <?php foreach ($user as $item): ?>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['id']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['username']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php if(!empty($item['truename'])){ echo $item["truename"]; }else{ echo "暂无设置"; } ?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['tel']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo mdate("%Y:%m:%d - %h:%i:%s", $item['create_time']);?></td>
+            <td align="center" valign="middle" class="borderbottom">
+              <a href="<?php echo site_url('admin/User/wx_follow_log').'/'. $item['id'];?>" target="mainFrame" onFocus="this.blur()" class="add">登录详情</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <a href="<?php echo site_url('admin/User/user_info').'/'. $item['id'];?>" target="mainFrame" onFocus="this.blur()" class="add">编辑</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <a href="<?php echo site_url('admin/User/user_del').'/'.$item['id'].'/'.$links_offset;?>" target="mainFrame" onFocus="this.blur()" class="add">删除</a></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="m-page"><?php echo $links;?></td>
+  </tr>
+</table>
+</body>
+</html>

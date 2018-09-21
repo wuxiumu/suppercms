@@ -1,0 +1,83 @@
+<?php include  site_url('admin/Login/main_head');  ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/bootstrap.min.css');?>" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/public/admin_res_path/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resource/layui/layui.all.js"></script>
+<link rel="stylesheet" href="/resource/layui/css/layui.css"  media="all">
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：试卷详情
+      <div class="js_refresh" onclick="location.reload()">刷新</div>    
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+ 
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+       <div class="main box">
+ 
+		    <div class="col-xs-12 split pull-left" style="padding:0px;position:relative;">
+		        <div class="box itembox">
+		            <h1 class="text-center tt"><?php echo $name;?></h1>
+		        </div>
+                <?php $pi=1;foreach ($datas as $item): ?>
+		        <hr>
+		        <div class="box itembox">
+		             <h2><?php echo $pi++.".".$item['name']?></h2>
+		        </div>
+		        <?php $si=1;foreach ($item['questions'] as $items): ?>
+		        <div class="box itembox paperexamcontent">
+		            <h3> 第<?php echo $si++?>题</h3>
+		            <div class="choice">		            
+		                <p><?php echo $items['question']?></p>
+		            </div>
+		            <div class="decidediv" style="position:relative;">
+		                <table class="table table-hover table-bordered">
+		                    <tbody>
+		                        <tr class="info">
+		                            <td width="15%">正确答案：</td>
+		                            <td><?php 
+		                            	if($items['type_id']=='2'){
+		                            		echo implode(",", unserialize($items['answer']));
+		                                }elseif($items['type_id']=='3'){
+		                                	if($items['answer']=='A'){
+		                                		echo '对';
+		                                    }else{ echo '错'; } 
+		                            	}else{
+		                                	echo $items['answer'];
+		                                }
+		                            ?></td>
+		                        </tr>
+		                        <tr>
+		                            <td>答案解析：</td>
+		                            <td>
+		                                <?php echo $items['description']?>
+		                            </td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+		            </div>
+		        </div>
+		        <?php endforeach; ?>
+		        <?php endforeach; ?>       
+		    </div>
+		</div>    
+    </td>
+  </tr>
+  <tr>
+ 
+  </tr>
+</table>
+
+<!-- Javascript Libraries -->
+   
+</body>
+</html>

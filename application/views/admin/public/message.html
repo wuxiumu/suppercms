@@ -1,0 +1,109 @@
+<html>
+<head>
+	<script type="text/javascript" src="<?php echo base_url(ADMIN_RES_PATH.'js/jquery.min.js');?>"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/> 
+	<title>提示消息</title>
+
+	<style type="text/css">
+		*{margin:0;padding:0;}
+		body { font: 75% Arail; text-align: center; }
+		.popup_screen{
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 100000;
+			width: 100%;
+			height: 100%;
+		}
+
+		.popup_screen .mask {
+			width: 100%;
+			height: 100%;
+			background: #000;
+			filter: alpha(Opacity=80);
+			-moz-opacity: .8;
+			opacity: .8;
+		}
+
+		.transition_page {
+			position: absolute;
+			left: 50%;
+			top: 30%;
+			width: 400px;
+			margin-left: -230px;
+			background-color: #fff;
+			border-radius: 7px;
+			overflow: hidden;
+		}
+
+		.transition_page .title {
+			width: 100%;
+			height: 50px;
+			font-size: 18px;
+			line-height: 50px;
+			text-align: center;
+			font-weight:bold;
+			color: #fff;
+			background-color: #1489ec;
+		}
+
+		.transition_page .main {
+			padding: 60px 30px 60px;
+		}
+
+		.transition_page .main .p1{
+			font-size:14px;
+			line-height:24px;
+			text-align:center;
+			font-weight:bold;
+			color:#000;
+		}
+
+	</style>
+</head>
+<body>
+<div class="popup_screen">
+	<div class="mask">&nbsp;</div>
+	<div class="transition_page js_middle">
+		<div class="title">消息提醒</div>
+		<div class="main">
+			<p class="p1"><?php echo $message;?></p>
+		</div>
+	</div>
+</div>
+
+<script>
+    /* 定位居中 */
+    $(function () {
+        jsMiddle();
+    });
+
+    function jsMiddle() {
+        var middle_w = $(".js_middle").width() / 2;
+        var middle_h = $(".js_middle").height() / 2;
+
+        $(".js_middle").css({
+            "margin-left": -middle_w,
+            "margin-top": -middle_h
+        });
+    };
+
+    var time=1;
+    var tt=setInterval(function(){
+        time--;
+        if(time<=0){
+            clearInterval(tt);
+        window.location.href="<?php echo $url;?>";
+            return;
+        }
+    }, 1000);
+    function stop(obj){
+        clearInterval(tt);
+        obj.style.display="none";
+    }
+
+
+</script>
+</body>
+</html>

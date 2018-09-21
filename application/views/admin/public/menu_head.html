@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>左侧导航menu</title>
+    <link href="<?php echo base_url(ADMIN_RES_PATH.'css/css.css');?>" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="<?php echo base_url(ADMIN_RES_PATH.'js/sdmenu.js');?>"></script>
+
+    <script type="text/javascript">
+        // <![CDATA[
+        var myMenu;
+        window.onload = function() {
+            myMenu = new SDMenu("my_menu");
+            myMenu.init();
+            
+        };
+        // ]]>
+    </script>
+    <style type=text/css>
+        html{ SCROLLBAR-FACE-COLOR: #538ec6; SCROLLBAR-HIGHLIGHT-COLOR: #dce5f0; SCROLLBAR-SHADOW-COLOR: #2c6daa; SCROLLBAR-3DLIGHT-COLOR: #dce5f0; SCROLLBAR-ARROW-COLOR: #2c6daa;  SCROLLBAR-TRACK-COLOR: #dce5f0;  SCROLLBAR-DARKSHADOW-COLOR: #dce5f0; overflow-x:hidden;}
+        body{overflow-x:hidden; background:url(<?php echo base_url(ADMIN_RES_PATH.'images/main/leftbg.jpg');?>) left top repeat-y #f2f0f5; width:194px;}
+    </style>
+</head>

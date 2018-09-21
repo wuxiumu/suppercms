@@ -1,0 +1,178 @@
+<?php include  site_url('admin/Login/main_head');  ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：题型管理 
+      <div class="js_refresh" onclick="history.go(-1)">返回</div>
+      <div class="js_refresh" onclick="location.reload()">刷新</div>    
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+        <tr>
+
+        	<td width="90%" align="left" valign="middle">
+                <div class="col-sm-9">&nbsp;&nbsp;题型分类: 
+					<select id="sel" class="sel_class" name="questsort">
+						<option value="99">全部</option>
+		                <option value="0" <?php if($id=='0'){ echo 'selected';}?>>客观题</option>
+		                <option value="1" <?php if($id=='1'){ echo 'selected';}?>>主观题</option>    
+	                </select>
+			    </div>				
+                <script type="text/javascript">
+              		var sel=document.getElementById("sel");                    
+              		sel.onchange=function(){
+              			var gid=this.options[this.selectedIndex].value;
+        				if(gid!='99'){
+        					window.location="<?php echo site_url('admin/exam/masterBasicQuesType/');?>"+gid;
+        				}else{
+        					window.location="<?php echo site_url('admin/exam/masterBasicQuesType/');?>";
+        				}              			                        
+              		}
+                </script>
+          </td>
+          <td width="10%" align="center" valign="middle" style="text-align:right; width:150px;"><a href="<?php echo site_url('admin/exam/masterBasicAddQuesType');?>" target="mainFrame" onFocus="this.blur()" class="add">添加题型</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+        <tr>
+          <th align="center" valign="middle" class="borderright">
+              <input type="checkbox" id="checkall">
+          </th>
+          <th align="center" valign="middle" class="borderright">题型ID</th>
+          <th align="center" valign="middle" class="borderright">题型</th>
+          <th align="center" valign="middle" class="borderright">题型分类</th>
+          <th align="center" valign="middle">操作</th>
+        </tr>
+        <?php foreach ($questype as $item): ?>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="center" valign="middle" class="borderright borderbottom">
+              <input rel="1" class="sbox js_sele_change_ids" type="checkbox" name="ids[]" value="<?php echo $item['id']?>">
+            </td>            
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['id']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['name']?></td>
+            <td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['questsort_name']?></td>
+            
+            <td align="center" valign="middle" class="borderbottom" id="<?php echo $item['id']?>">
+              <a href="javascript:;"  class="js_update">编辑</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <a href="javascript:;" class="js_display">
+              <?php  if($item['display']=='1'){ echo "正常"; }else{ echo "禁用"; } ?>
+              </a>
+              <span class="gray">&nbsp;|&nbsp;</span>              
+              <a href="javascript:;" class="js_delete">删除</a></td>
+          </tr>
+        <?php endforeach; ?>
+          <tr>
+             
+              
+            
+          </tr>
+      </table>
+      <div class="js_refresh js_selected" style="float: left;background-color: red;">删除</div>
+    </td>
+
+  </tr>
+
+</table>
+<!-- Javascript Libraries -->
+        <script type="text/javascript">            
+        $(".js_update").click(function(){  
+          var _this=$(this);
+      		var id=_this.parent().attr("id");
+      		window.location="<?php echo site_url('admin/exam/masterBasicModifyQuesType/');?>"+id;
+    		});
+        $(".js_selected").click(function(){ 
+            var clss_name='ids[]'; 
+            var id=show_id(clss_name);
+            if(id==''){
+              alert('选项不能为空');return false;
+            }
+            var r=confirm("批量删除前请确认"); 
+            if (r==true){ 
+                //执行
+            }else{ 
+                return false;//取消
+            }
+            
+            console.log(id);
+        })
+        $(".js_display").click(function(){  
+          var _this=$(this);
+				  var id = _this.parent().attr("id");
+				  var text = _this.html().trim();
+			    $.ajax({  
+			     url:'<?php echo site_url("admin/exam/masterBasicDelQuesType/");?>'+id,   
+			     type:'POST', 
+			     data:{
+			     	'id':id,
+	          'action':'display'
+	         }, 
+			     dataType:'json', 
+			     async : false, //默认为true 异步  
+			     success:function(data){  
+			     	if(data=='1'){
+			     		if(text=='正常'){
+			     			_this.html('禁用');
+			     		}else{
+			     			_this.html('正常');
+			     		}
+			     	}
+			     }				     
+			   });               
+        });
+        $(".js_delete").click(function(){  
+  			var r=confirm("删除前请确认"); 
+  			if (r==true){ 
+  			    //执行
+  			}else{ 
+  			    return false;//取消
+  			}
+        var _this=$(this);
+			  var id=_this.parent().attr("id");
+		    $.ajax({  
+		     url:'<?php echo site_url("admin/exam/masterBasicDelQuesType/");?>'+id,   
+		     type:'POST', 
+		     data:{
+		     	'id':id,
+          'action':'delete'
+         }, 
+		     dataType:'json', 
+		     async : false, //默认为true 异步  
+		     success:function(data){  
+		     	if(data=='1'){
+		     		_this.parent().parent().remove();
+		     	}
+		     }				     
+		    });              
+        });
+        //jq全选
+        $(document).on('click','#checkall',function(){
+          if($(this).is(":checked")){
+            $('.js_sele_change_ids').prop('checked',true);
+          }else{
+            $('.js_sele_change_ids').prop('checked',false);
+          }
+        })  
+        //获取选中id     
+        function show_id(clss_name){
+          obj = document.getElementsByName(clss_name);
+          check_val = [];
+          for(k in obj){
+            if(obj[k].checked){
+              check_val.push(obj[k].value);
+            }
+          }
+          return check_val;         
+        }           
+        </script>
+</body>
+</html>

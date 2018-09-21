@@ -1,0 +1,211 @@
+<?php  include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/bootstrap.min.css');?>" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/public/admin_res_path/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resource/layui/layui.all.js"></script>
+<link rel="stylesheet" href="/resource/layui/css/layui.css"  media="all">
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：试卷信息管理&nbsp;&nbsp;>&nbsp;&nbsp;修改试卷信息
+      <div class="js_refresh" onclick="history.go(-1)">返回</div>
+      <div class="js_refresh" onclick="location.reload()">刷新</div>    
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" id="addinfo">
+      <a href="<?php echo site_url('admin/exam/selfPage');?>" target="mainFrame" onFocus="this.blur()" class="add">手工添加组卷</a>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <form method="post" action="<?php echo site_url('admin/exam/updateSelfPage/').$exam['id'];?>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">试卷名称:</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="name" value="<?php echo $exam['name']?>" class="text-word">
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">评卷方式：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+               <input type="radio" name="args[examdecide]" value="1" <?php if($exam['decide']=='1'){echo 'checked';}?>>教师评卷&nbsp;&nbsp;&nbsp;
+               <input type="radio" name="args[examdecide]" value="2" <?php if($exam['decide']=='2'){echo 'checked';}?>>学生自评
+               (教师评卷时有主观题则需要教师在后台评分后才能显示分数，无主观题自动显示分数)
+            </td>
+          </tr>
+          <tr id="choicebox" onMouseOut="this.style.backgroundColor='#ffffff'" >
+            <td align="right" valign="middle" class="borderright borderbottom bggray">考试科目：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+                <select class="sel_class" name="args[examsubject]">              
+	                <?php echo $selectHtml;?>	  
+	              </select>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">考试时长:</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="args[examsetting][examtime]" value="<?php echo $exam['setting']['examtime']?>" class="text-word">(分钟)
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">试卷总分:</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="args[examsetting][score]" value="<?php echo $exam['setting']['score']?>" class="text-word">
+            </td>
+          </tr>          
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">及格线	:</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="args[examsetting][passscore]" value="<?php echo $exam['setting']['passscore']?>" class="text-word">
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">来源:</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="args[examsetting][comfrom]" value="<?php echo $exam['setting']['comfrom']?>" class="text-word">
+            </td>
+          </tr>    
+
+          <tr>
+      	  <td align="right" valign="middle" class="borderright borderbottom bggray"> 手工组卷：</td>
+          <td>    	
+          <table class="table table-hover table-bordered">
+              <thead>
+                  <tr class="info">
+                      <td width="170" align="center">	<b>题型</b>
+                      </td>
+                      <td width="80" align="center">	<b>题数</b>
+                      </td>
+                      <td width="80" align="center">	<b>分值</b>
+                      </td>
+                      <td width="50" align="center">	<b>已选</b>
+                      </td>
+                      <td width="120" align="center">	<b>操作</b>
+                      </td>
+                      <td width="520" align="center">	<b>小题说明</b>
+                      </td>
+                  </tr>
+              </thead>
+              <tbody>
+
+              	  <?php foreach ($questype as $item): ?>
+                  <tr class="form-group questpanel" id="<?php $name=$item['name'];$id=$item['id'];echo $id;?>">
+                      <td><?php echo $name;?></td>
+                      <td>
+                          <input class="form-control" type="text" name="args[examsetting][questype][<?php echo $id;?>][number]" value="<?php
+                          	echo $exam['setting']['questype'][$id]['number'];?>" align="left" size="2">
+                      </td>
+                      <td>
+                          <input class="form-control" type="text" name="args[examsetting][questype][<?php echo $id;?>][score]" value="<?php
+                          	echo $exam['setting']['questype'][$id]['score'];?>" size="2">
+                      </td>
+                      <td> 
+                           <span id="ialreadyselectnumber_<?php echo $id;?>"><?php
+                           	if(substr_count($exam['questions'][$id]['questions'],',')>=1){
+                           		echo substr_count($exam['questions'][$id]['questions'],',')-1;
+                            }else{
+                            	echo 0;
+                            } 							
+                           	?></span>
+                      </td>
+                      <td aligin="center" > 
+                           <a class="btn btn-info js-info" href="javascript:;" style="color: white;">看题</a>
+                           <a class="btn btn-success js-selected" href="javascript:;" style="color: white;">选题</a>
+                      </td>
+                      <td>
+                          <input type="hidden" value="<?php echo $exam['questions'][$id]['questions'];?>" id="iselectquestions_<?php echo $id;?>" name="args[examquestions][<?php echo $id;?>][questions]">
+
+                          <input type="hidden" value="" id="iselectrowsquestions_<?php echo $id;?>" name="args[examquestions][<?php echo $id;?>][rowsquestions]">
+
+                          <input class="form-control" type="text" name="args[examsetting][questype][<?php echo $id;?>][describe]" value="<?php
+                          	echo $exam['setting']['questype'][$id]['describe'];?>" size="52" placeholder="选填">
+                      </td>
+                  </tr>
+                  <?php endforeach; ?>                  
+              </tbody>
+          </table>   
+          </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+        	  <td align="right" valign="middle" class="borderright borderbottom bggray">题型排序：</td>
+        	  <td align="left" valign="middle" class="borderright borderbottom main-for">
+        			    <?php $i=1;foreach ($questype as $item): ?>
+        			        <?php echo $item['name'];$ii=$i++;?>:<input style="border-radius: 4px;" type="text" name="args[examsetting][questypelite][<?php echo $ii;?>]" value="<?php echo $exam['setting']['questypelite'][$ii];?>" align="left" size="1" >&nbsp;&nbsp;&nbsp;
+         			    <?php endforeach; ?>
+            </td>
+          </tr> 
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+        	  <td align="right" valign="middle" class="borderright borderbottom bggray">是否展示：</td>
+        	  <td align="left" valign="middle" class="borderright borderbottom main-for">
+        	    <input type="radio" name="display"   value="1" <?php if($exam['display']=='1'){echo 'checked';}?>> 是 &nbsp;
+        	    <input type="radio" name="display"   value="2" <?php if($exam['display']=='2'){echo 'checked';}?>> 否 &nbsp;
+        	  </td>
+          </tr> 
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">&nbsp;</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input name="id" type="hidden" value="<?php echo $exam['id']?>">	
+              <input name="" type="submit" value="提交" class="text-but">
+              <input name="" type="reset" value="重置" class="text-but">              
+            </td>
+          </tr>
+        </table>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+$(function(){
+    $(document).on('click',".js-info",function(){
+        var _this=$(this);
+        var id   = _this.parent().parent().attr("id");
+        var ids  = "iselectquestions_"+id;
+        var idsvalue = getIdvalue(ids);
+        var _url = "/index.php/admin/exam/getSelfPageQuestions/"+id+"/all/?canshu="+id+"&ids="+idsvalue;
+        layer.open({
+                type: 2,
+                offset: ['60px', '240px'],
+                area: ['900px', '600px'],
+                fix: false, //不固定
+                maxmin: true,
+                content: _url
+            });
+    })
+    $(document).on('click',".js-selected",function(){
+        var _this=$(this);
+        var id   = _this.parent().parent().attr("id");
+        var ids  = "iselectquestions_"+id;
+        var idsvalue = getIdvalue(ids);
+        var _url = "/index.php/admin/exam/addSelfPageQuestions/"+id+"/all/?canshu="+id+"&ids="+idsvalue;
+        layer.open({
+                type: 2,
+                offset: ['60px', '240px'],
+                area: ['900px', '600px'],
+                fix: false, //不固定
+                maxmin: true,
+                content: _url
+            });
+    })    
+})
+
+ /*验证 */
+$("form").submit(function(e){
+    var name=$("input[name='name']").val();        
+    if(name=="" || name==null ){
+        alert("名称不能为空");
+        return false;
+    }
+});
+//获取id的value值
+function getIdvalue(idname){
+	return document.getElementById(idname).value; 
+	/*document.getElementById（id名称).value;*/ 
+}
+</script>
+
+</body>
+</html>

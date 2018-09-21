@@ -1,0 +1,209 @@
+<?php include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+<style type="text/css">
+  .update_img {
+    width: 100px;
+    height: 40px;
+    line-height: 30px;
+    border: 1px solid #cdcdcd;
+    background: #e6e6e6;
+    color: #969696;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .js_back{
+    width: 100px;
+    height: 40px;
+    line-height: 30px;
+    border: 1px solid #cdcdcd;
+    background: #e6e6e6;
+    color: #969696;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+    <tr>
+        <td width="99%" align="left" valign="top">您的位置：系统设置&nbsp;&nbsp;>&nbsp;&nbsp;基本设置</td>
+    </tr>
+    <tr>
+        <td class="main-base-menu">
+           <div class="menu">
+                  <a class="hover" href="javascript:;" value="0">基本设置</a>
+                  <a href="javascript:;" value="1" >其他配置</a>
+                </div>
+        </td>
+    </tr>
+    <form action="<?php echo site_url('admin/Base/base_update');?>" method="post" enctype="multipart/form-data">
+    <tr>
+        <td align="left" valign="top">
+            <table class="dm_js_menu" width="100%" border="0" cellspacing="0" cellpadding="0" >
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站LOGO</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <?php if(!empty($base['web_logo'])){?>   
+                         <img id="img" src="<?php echo $base['web_logo'];?>" alt="" style="" width="200px" height="67px"  /> 
+                         <input id="input_img" type="file" name="web_logo" value="<?php echo $base['web_logo'];?>" class="text-word" style="display:none;">
+                         <span class="update_img">修改</span>                                                           
+                        <?php }else{?>
+                        	<input type="file" name="web_logo" value="" class="text-word">
+                        <?php }?>
+                    </td>
+                </tr>
+               <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站名称</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="web_name" value="<?php echo $base['web_name'];?>" class="text-word">
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站域名</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="web_domain" value="<?php echo $base['web_domain'];?>" class="text-word">
+                        <span></span>
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">公司名称</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="company_name" value="<?php echo $base['company_name'];?>" class="text-word">
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">联系地址</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="company_address" value="<?php echo $base['company_address'];?>" class="text-word">
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">联系电话</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="company_tphone" value="<?php echo $base['company_tphone'];?>" class="text-word">
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">公司邮箱</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="company_mail" value="<?php echo $base['company_mail'];?>" class="text-word">
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站备案号</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="web_Record_number" value="<?php echo $base['web_Record_number'];?>" class="text-word">
+                         <span>显示在首页的标题栏</span>
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站标题</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="appname" value="<?php echo $base['appname'];?>" class="text-word">
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">关键字</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="keyword" value="<?php echo $base['keyword'];?>" class="text-word">
+                        <span>多的seo关键字使用","分隔</span>
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站描述</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <textarea type="text" name="description" cols="40" rows="5"><?php echo $base['description'];?></textarea>
+                       
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">网站版权信息</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <textarea type="text" name="web_copyright" cols="40" rows="5"><?php echo $base['web_copyright'];?></textarea>
+                    </td>
+                </tr>
+            </table>
+            <table class="dm_js_menu" width="100%" border="0" cellspacing="0" cellpadding="0" style="display: none;">
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">商户号</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="wlpay_user" value="<?php echo $base['wlpay_user'];?>" class="text-word">
+                         
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">APPID</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="wlpay_id" value="<?php echo $base['wlpay_id'];?>" class="text-word">
+                         
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">商户支付密钥</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="wlpay_key" value="<?php echo $base['wlpay_key'];?>" class="text-word">
+                      
+                    </td>
+                </tr>
+                <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                    <td align="right" valign="middle" class="borderright borderbottom bggray">公众帐号secert</td>
+                    <td align="left" valign="middle" class="borderright borderbottom main-for">
+                        <input type="text" name="wlpay_appsecret" value="<?php echo $base['wlpay_appsecret'];?>" class="text-word">
+                      
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+      <td>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" >
+            <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+                <td align="right" valign="middle" class="borderright borderbottom bggray">&nbsp;</td>
+                <td align="left" valign="middle" class="borderright borderbottom main-for">
+                  <input name="" type="submit" value="提交" class="text-but">
+                  <input name="" type="reset" value="重置" class="text-but"></td>
+            </tr>
+        </table>
+      </td>
+    </form> 
+</table>
+<script>
+    $("form").submit(function(e){
+        var title=$("input[name='web_name']").val();
+        if(title=="" || title==null ){
+            alert("网站名称不能为空");
+            return false;
+        }
+    });
+    $(document).ready(function(){        
+        $(".update_img").click(function(){  
+           $("#img").remove();
+           $("#input_img").show();
+           $(".update_img").after("<span class='js_back' onclick='back()'>取消</span>");
+           $(".update_img").remove();
+        });
+    });
+    function back(){
+      location.reload();
+    }    
+</script>
+<script type="text/javascript">
+    //导航table切换
+    $(".menu a").click(function(){
+      var _this=$(this);
+      
+      _this.addClass("hover");
+      _this.siblings().removeClass("hover");
+
+      var _dm_js_menu=$(".dm_js_menu").eq(_this.attr("value"));
+      _dm_js_menu.show();
+      _dm_js_menu.siblings().hide();
+
+    })
+</script>
+</body>
+</html>

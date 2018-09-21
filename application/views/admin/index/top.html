@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台页面头部</title>
+    <link href="<?php echo base_url(ADMIN_RES_PATH.'css/css.css');?>" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="<?php echo base_url(ADMIN_RES_PATH.'js/jquery.min.js');?>"></script>
+</head>
+<body onselectstart="return false" oncontextmenu=return(false) style="overflow-x:hidden;">
+<!--禁止网页另存为-->
+<noscript><iframe scr="*.htm"></iframe></noscript>
+<!--禁止网页另存为-->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="header">
+  <tr>
+    <td rowspan="2" align="left" valign="top" id="logo">
+        <img src="<?php echo base_url(ADMIN_RES_PATH.'images/main/logo.jpg');?>">
+    </td>
+    <td align="left" valign="bottom">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <!--<td align="left" valign="bottom" id="header-name">CMS管理平台</td>-->
+        <td align="right" valign="top" id="header-right">
+        	<a href="<?php echo site_url('admin/Login/login_out');?>" target="topFrame" onFocus="this.blur()" class="admin-out">注销</a>
+            <a href="<?php echo site_url('admin/happymod/main_shangjia/pid/1');?>" target="mainFrame" onFocus="this.blur()" class="admin-home">管理首页</a>
+        	<a href="<?php echo site_url('/');?>" target="_blank" onFocus="this.blur()" class="admin-index">网站首页</a>
+            <span>
+            <!-- 日历 -->
+            <SCRIPT type=text/javascript src="<?php echo base_url(ADMIN_RES_PATH.'js/clock.js');?>"></SCRIPT>
+            <SCRIPT type=text/javascript>showcal();</SCRIPT>
+            </span>
+        </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td align="left" valign="bottom">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="bottom" id="header-menu">
+ 
+            <a class="hover" href="<?php echo site_url('admin/Main/index_menu');?>" target="leftFrame" onFocus="this.blur()" >后台首页</a>         
+           
+            <a onclick="top.leftFrame.location='<?php echo site_url('admin/column/column_menu');?>';top.mainFrame.location='<?php echo site_url('/admin/column/table/0');?>';" onfocus="this.blur()">栏目管理</a>
+           
+            <a onclick="top.leftFrame.location='<?php echo site_url('admin/source/source_menu');?>';top.mainFrame.location='<?php echo site_url('/admin/source/table/0');?>';" onfocus="this.blur()">素材管理</a>
+ 
+            <a onclick="top.leftFrame.location='<?php echo site_url('admin/admin/admin_menu');?>';top.mainFrame.location='<?php echo site_url('/admin/admin/table/0');?>';" onfocus="this.blur()">角色管理</a>
+             
+            <a onclick="top.leftFrame.location='<?php echo site_url('admin/notice/notice_menu');?>';top.mainFrame.location='<?php echo site_url('/admin/notice/table/1');?>';" onfocus="this.blur()">前端管理</a>              
+             
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+</body>
+<script type="text/javascript">
+    $("#header-menu a").click(function(){
+      var _this=$(this);
+      _this.addClass("hover");
+      _this.siblings().removeClass("hover");
+    });
+</script>
+</html>

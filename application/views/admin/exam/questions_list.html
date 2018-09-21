@@ -1,0 +1,252 @@
+<?php include  site_url('admin/Login/main_head');  ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="/resource/layui/layui.all.js"></script>
+<link rel="stylesheet" href="/resource/layui/css/layui.css"  media="all">
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：试题详情
+      <div class="js_refresh" onclick="location.reload()">刷新</div>    
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+        <tr>
+          <td width="30%" align="center" valign="middle" style="text-align:right; width:200px;"><a href="<?php echo site_url('admin/exam/addQuestion/').$type_data['id'];?>" target="mainFrame" onFocus="this.blur()" class="add">普通试题<?php echo $type_data['name'];?>添加</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+        <tr>
+          <th align="center" valign="middle" class="borderright">
+				      <input type="checkbox" id="checkall">
+          </th>
+          <th align="center" valign="middle" class="borderright">试题类型</th>
+          <th align="center" valign="middle" class="borderright">试题内容</th>
+          <th align="center" valign="middle" class="borderright">录入人/录入时间</th>
+          <th align="center" valign="middle" class="borderright">删除人/删除时间</th>
+          <th align="center" valign="middle" class="borderright">难度级别</th>
+          <th align="center" valign="middle">操作</th>
+        </tr>
+        <?php foreach ($questions as $item): ?>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'" id="<?php echo $item['id']?>">
+            <td align="center" valign="middle" class="borderright borderbottom">
+            	<input rel="1" class="sbox js_sele_change_ids" type="checkbox" name="ids[]" value="<?php echo $item['id']?>" <?php if(in_array($item['id'],$ids)){echo 'checked';}?>>
+            </td>
+            <td align="center" valign="middle" class="borderright borderbottom">
+            	<?php echo $type_data['name']?>
+            </td>
+            <td align="center" valign="middle" class="borderright borderbottom">
+            	<?php echo  html_entity_decode($item['question']);?></td>
+            
+			<td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['username'].'/'.date("Y-m-d",$item['create_time']);?></td>
+			<td align="center" valign="middle" class="borderright borderbottom"><?php 				
+				if(!empty($item['del_user'])){
+					echo $item['del_user'].'/'.date("Y-m-d",$item['del_time']);
+			    }
+			?></td>
+			<td align="center" valign="middle" class="borderright borderbottom"><?php echo $item['level']?></td>
+            <td align="center" valign="middle" class="borderbottom" id="<?php echo $item['id']?>">
+              <a href="javascript:;"  class="js_update">编辑</a>
+              <span class="gray">&nbsp;|&nbsp;</span>
+              <a href="javascript:;" class="js_display">
+              <?php  if($item['display']=='1'){ echo "正常"; }else{ echo "禁用"; } ?>
+              </a>
+              <span class="gray">&nbsp;|&nbsp;</span>              
+              <a href="javascript:;" class="js_delete">删除</a></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="m-page">
+    	<div class="js_refresh js_selected">确定</div>
+    </td>
+  </tr>
+</table>
+
+<!-- Javascript Libraries -->
+        <script type="text/javascript"> 
+        $(".js_update").click(function(){  
+            var _this=$(this);
+    		    var id=_this.parent().attr("id");
+    		    window.location="<?php echo site_url('admin/exam/updateQuestion/');?>"+id;
+  		});        
+        $(".js_display").click(function(){  
+          var _this=$(this);
+  				var id = _this.parent().attr("id");
+  				var text = _this.html().trim();
+  			    $.ajax({  
+  			     url:'<?php echo site_url("admin/exam/masterBasicDelQuestions/");?>'+id,   
+  			     type:'POST', 
+  			     data:{
+  			     	'id':id,
+  	          		'action':'display'
+  	          	 }, 
+  			     dataType:'json', 
+  			     async : false, //默认为true 异步  
+  			     success:function(data){  
+  			     	if(data=='1'){
+  			     		if(text=='正常'){
+  			     			_this.html('禁用');
+  			     		}else{
+  			     			_this.html('正常');
+  			     		}
+  			     	}
+  			     }				     
+  			   });               
+        });
+      $(".js_delete").click(function(){  
+    			var r=confirm("删除前请确认"); 
+    			if (r==true){ 
+    			    //执行
+    			}else{ 
+    			    return false;//取消
+    			}
+                var _this=$(this);
+    			var id=_this.parent().attr("id");
+    		    $.ajax({  
+    		     url:'<?php echo site_url("admin/exam/masterBasicDelQuestions/");?>'+id,   
+    		     type:'POST', 
+    		     data:{
+    		     	'id':id,
+              		'action':'delete'
+              	 }, 
+    		     dataType:'json', 
+    		     async : false, //默认为true 异步  
+    		     success:function(data){  
+    		     	if(data=='1'){
+    		     		_this.parent().parent().remove();
+    		     	}
+    		     }				     
+    		   });              
+        });  
+        $(".js_selected").click(function(){ 
+       			var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+       			var _value=GetQueryString("canshu");
+       			var _ids  =GetQueryString("ids");
+          	var clss_name='ids[]'; 
+            var id=show_id(clss_name);
+            if(id==''){
+            	alert('请选择试题');
+            }else{
+            	//试题id
+            	var se_id='#iselectquestions_'+_value;
+            	var se_id_='#iselectrowsquestions_'+_value;
+            	var ialreadyselectnumber='#ialreadyselectnumber_'+_value;
+            	//试题个数
+            	var num = id.length;  
+            	parent.$(ialreadyselectnumber).html(num);
+
+            	
+            	//判断 questions hidden 是否为空
+            	console.log(id);
+            	var questions=parent.$(se_id_).val()
+            	if(questions==''){
+            	  questions=','+id+',';
+            	}else{
+	              questions = ','+id+',';
+            	}
+            	
+            	/*var _str=str_explode(questions);
+            	_str = removeDuplicatedItem(_str); 
+            	console.log(_str);*/
+
+            	parent.$(se_id).val(questions);
+            	parent.$(se_id_).val(questions);            	      	
+            	//关闭父级窗口
+                parent.layer.close(index);  
+            }
+  		});
+        $(".js_sele_change_ids").click(function(){  
+          var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+          var _value=GetQueryString("canshu");
+          var _ids  =GetQueryString("ids");
+          var clss_name='ids[]'; 
+          var id=show_id(clss_name);
+
+          var _this=$(this);
+          var id_value =_this.val();
+    		if( _this.checked==true){
+    			console.log(id);
+    		}else{
+    			//试题id
+            	var se_id='#iselectquestions_'+_value;
+            	var se_id_='#iselectrowsquestions_'+_value;
+            	var ialreadyselectnumber='#ialreadyselectnumber_'+_value;
+            	//试题个数
+            	var num = id.length;  
+            	parent.$(ialreadyselectnumber).html(num);
+ 
+    			    var questions=parent.$(se_id_).val()
+            	if(questions==''){
+            	  questions=','+id+',';
+            	}else{
+	              questions = ','+id+',';
+            	}
+            	console.log(questions);
+            	parent.$(se_id).val(questions);
+            	parent.$(se_id_).val(questions); 
+    			/*console.log(id);*/
+    			/*questions=parent.$(se_id_).val()+id+',';
+    			parent.$(se_id_).val(questions);  */
+    			/*console.log(id);
+    			var questions=parent.$(se_id_).val();
+    			questions=parent.$(se_id_).val()+id+',';
+    			parent.$(se_id).val(questions);
+            	parent.$(se_id_).val(questions);  */  
+    		}
+    		
+        });
+        //全选 id换成对应按钮的id，class为对应input的class
+    		$(document).on('click','#checkall',function(){
+    		    if($(this).is(":checked")){
+    		        $('.js_sele_change_ids').prop('checked',true);
+    		    }else{
+    		        $('.js_sele_change_ids').prop('checked',false);
+    		    }
+    		})
+		 
+  		//转数组
+  		function str_explode(s){
+			ss = s.split(",");// 在每个逗号(,)处进行分解  ["abc", "abcd", "aaa"]
+ 			return ss;
+  		}
+  		//去空
+  		function removeDuplicatedItem(ar) {
+		  var ret = [];
+		  for (var i = 0, j = ar.length; i < j; i++) {
+		    if (ret.indexOf(ar[i]) === -1) {
+		      ret.push(ar[i]);
+		    }
+		  }
+		  return ret;
+		}
+  		//获取选中id     
+        function show_id(clss_name){
+        	obj = document.getElementsByName(clss_name);
+        	check_val = [];
+        	for(k in obj){
+        		if(obj[k].checked){
+        			check_val.push(obj[k].value);
+        		}
+        	}
+        	return check_val;        	
+        } 
+        function GetQueryString(name)
+        {
+             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+             var r = window.location.search.substr(1).match(reg);
+             if(r!=null)return  unescape(r[2]); return null;
+        }         
+        </script>
+</body>
+</html>

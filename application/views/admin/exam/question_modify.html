@@ -1,0 +1,297 @@
+<?php  include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+<link href="/public/admin_res_path/css/jqtaggood.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/public/jquery-label20160511/js/jquery.js"></script>
+
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：普通试题管理&nbsp;&nbsp;>&nbsp;&nbsp;普通试题添加
+      <div class="js_refresh" onclick="history.go(-1)">返回</div>
+      <div class="js_refresh" onclick="location.reload()">刷新</div>    
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" id="addinfo">
+      <a href="<?php echo site_url('admin/exam/addQuestion/').$question['type_id'];?>" target="mainFrame" onFocus="this.blur()" class="add">普通试题添加</a>
+    </td>
+  </tr>
+  <tr>                  
+    <td align="left" valign="top">
+      <form method="post" action="<?php echo site_url('admin/exam/updateQuestion/').$question['id'];?>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">知识点：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="hidden" name="knows_id" value="" class="text-word">
+              <div class="tag-good">
+                  <div class="plus-tag tagbtn clearfix" id="myTags" style="display: block;">
+                  	<?php if(!empty($question['knows_id'])){?>
+                  		<?php foreach ($question['knows_id'] as $item): ?>
+                  			<?php echo "<a value='".$item['id']."' title='".$item['name']."' href='javascript:void(0);'><span>".$item['name']."</span><em></em></a>";?>
+                  		<?php endforeach; ?>
+                  	<?php }?>                   
+                  </div>
+                  <div id="mycard-plus">
+                      <div class="default-tag tagbtn">
+                        <div id="js_clearfix" class="clearfix">  
+	                  	<?php if(!empty($question['knows_id'])){?>
+	                  		<?php foreach ($question['knows_id'] as $item): ?>
+	                  			<?php echo "<a value='".$item['id']."' title='".$item['name']."' href='javascript:void(0);'><span>".$item['name']."</span><em></em></a>";?>
+	                  		<?php endforeach; ?>
+	                  	<?php }?>
+                        </div>
+                      </div>
+                      <!--mycard-plus end-->
+                  </div>
+              </div>
+                <script type="text/javascript" src="/public/admin_res_path/js/jqtaggood.js"></script>
+
+                <select id="sel_subject">
+                   <option>选择科目</option>
+                   <?php echo $selectHtml_subject;?>
+                </select>
+                <select id="sel_section">
+                   <option>选择章节</option>
+                </select>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray"> 题型：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <select id="sel_questchoice" class="sel_class" name="type_id">
+                <?php echo $selectHtml;?>
+              </select>
+            </td>
+          </tr>                    
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">题干：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="question" value="<?php echo $question['question'];?>" class="text-word">
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">备选项：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="select" value="<?php echo $question['select'];?>" class="text-word">
+            </td>
+          </tr>          
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">备选项数量：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="number" name="selectnumber" value="<?php echo $question['selectnumber'];?>" class="text-word">
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">参考答案：</td>
+            <td id="js_questionanswer" align="left" valign="middle" class="borderright borderbottom main-for">
+                         
+
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">习题解析：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="description" value="<?php echo $question['description'];?>" class="text-word">
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">难度级别：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+                <select class="sel_class" name="level">
+                <option value="1" <?php if($question['level']=='1'){echo 'selected';}?>>1</option>
+                <option value="2" <?php if($question['level']=='2'){echo 'selected';}?>>2</option>
+                <option value="3" <?php if($question['level']=='3'){echo 'selected';}?>>3</option> 
+              </select>
+            </td>
+          </tr>
+
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+      		  <td align="right" valign="middle" class="borderright borderbottom bggray">是否展示：</td>
+      		  <td align="left" valign="middle" class="borderright borderbottom main-for">
+      		    <input type="radio" name="display"   value="1" <?php if($question['display']=='1'){echo 'checked';}?>> 是 &nbsp;
+      		    <input type="radio" name="display"   value="2" <?php if($question['display']=='2'){echo 'checked';}?>> 否 &nbsp;
+      		  </td>
+      	  </tr> 
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">&nbsp;</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input name="id" type="hidden" value="<?php echo $question['id'];?>">
+              <input name="" type="submit" value="提交" class="text-but">
+              <input name="" type="reset" value="重置" class="text-but">
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+
+
+<script type="text/javascript">
+ <?php  if($question['type_id']=='1'){;?>
+      var _html ='';
+      _html+="<input type='radio' name='answer' value='A' <?php if($question['answer']=='A'){ echo 'checked';}?>>A&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='B' <?php if($question['answer']=='B'){ echo 'checked';}?>>B&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='C' <?php if($question['answer']=='C'){ echo 'checked';}?>>C&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='D' <?php if($question['answer']=='D'){ echo 'checked';}?>>D&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='E' <?php if($question['answer']=='E'){ echo 'checked';}?>>E&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='F' <?php if($question['answer']=='F'){ echo 'checked';}?>>F&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='G' <?php if($question['answer']=='G'){ echo 'checked';}?>>G&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='H' <?php if($question['answer']=='H'){ echo 'checked';}?>>H&nbsp;&nbsp;";      
+ <?php }?>  
+ <?php  if($question['type_id']=='2'){;?>
+      var _html ='';
+      _html+="<input type='checkbox' name='answer[]' value='A' <?php if(in_array('A',$question['answer'])){ echo 'checked';}?>>A&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='B' <?php if(in_array('B',$question['answer'])){ echo 'checked';}?>>B&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='C' <?php if(in_array('C',$question['answer'])){ echo 'checked';}?>>C&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='D' <?php if(in_array('D',$question['answer'])){ echo 'checked';}?>>D&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='E' <?php if(in_array('E',$question['answer'])){ echo 'checked';}?>>E&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='F' <?php if(in_array('F',$question['answer'])){ echo 'checked';}?>>F&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='G' <?php if(in_array('G',$question['answer'])){ echo 'checked';}?>>G&nbsp;&nbsp;";
+      _html+="<input type='checkbox' name='answer[]' value='H' <?php if(in_array('H',$question['answer'])){ echo 'checked';}?>>H&nbsp;&nbsp;";      
+ <?php }?>
+
+ <?php  if($question['type_id']=='3'){;?>
+      var _html ='';
+      _html+="<input type='radio' name='answer' value='A' <?php if($question['answer']=='A'){ echo 'checked';}?>>对&nbsp;&nbsp;";
+      _html+="<input type='radio' name='answer' value='B' <?php if($question['answer']=='B'){ echo 'checked';}?>>错&nbsp;&nbsp;";      
+ <?php }?>
+ <?php  if($question['type_id']=='4'){;?>
+      var _html ='';
+      _html+="<input type='text' name='answer' value='<?php echo $question['answer'];?>' class='text-word'>";      
+ <?php }?> 
+ <?php  if($question['type_id']=='5'){;?>
+      var _html ='';
+      _html+="<input type='text' name='answer' value='<?php echo $question['answer'];?>' class='text-word'>";      
+ <?php }?> 
+  <?php  if($question['type_id']=='6'){;?>
+      var _html ='';
+      _html+="<input type='text' name='answer' value='<?php echo $question['answer'];?>' class='text-word'>";      
+ <?php }?>  
+  var html1="<input type='radio' name='answer' value='A'>A&nbsp;&nbsp;<input type='radio' name='answer' value='B'>B&nbsp;&nbsp;<input type='radio' name='answer' value='C'>C&nbsp;&nbsp;<input type='radio' name='answer' value='D'>D&nbsp;&nbsp;<input type='radio' name='answer' value='E'>E&nbsp;&nbsp;<input type='radio' name='answer' value='F'>F&nbsp;&nbsp;<input type='radio' name='answer' value='G'>G&nbsp;&nbsp;<input type='radio' name='answer' value='H'>H&nbsp;&nbsp;";
+  var html2="<input type='checkbox' name='answer[]' value='A'>A&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='B'>B&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='C'>C&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='D'>D&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='E'>E&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='F'>F&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='G'>G&nbsp;&nbsp;<input type='checkbox' name='answer[]' value='H'>H&nbsp;&nbsp;";
+  var html3="<input type='radio' name='answer' value='A'>对&nbsp;&nbsp;<input type='radio' name='answer' value='B'>错&nbsp;&nbsp;";
+  var html4="<input type='text' name='answer' value='' class='text-word'>";
+  var html5="<input type='text' name='answer' value='' class='text-word'>"; 
+  var html6="<input type='text' name='answer' value='' class='text-word'>";
+  var sel_questchoice=document.getElementById("sel_questchoice");      
+  var questionanswer=document.getElementById("js_questionanswer");                    
+  sel_questchoice.onchange=function(){
+      var gid=this.options[this.selectedIndex].value;
+      chang_questchoice(gid)
+  }
+  $(document).ready(function(){
+      var gid=$("#sel_questchoice").val();
+      questionanswer.innerHTML=_html; 
+  });
+  function chang_questchoice(gid){
+    switch(gid){
+      case '1':
+        questionanswer.innerHTML=html1; 
+        break;
+      case '2':
+        questionanswer.innerHTML=html2; 
+        break;
+      case '3':
+        questionanswer.innerHTML=html3; 
+        break;
+      case '4':
+        questionanswer.innerHTML=html4; 
+        break; 
+      case '5':
+        questionanswer.innerHTML=html5; 
+        break;
+      case '6':
+        questionanswer.innerHTML=html6; 
+        break;           
+    }
+
+  }
+  //关键字模块
+  var subject=document.getElementById("sel_subject");      
+  var section=document.getElementById("sel_section");                    
+  subject.onchange=function(){
+  var id=this.options[this.selectedIndex].value;
+       $.ajax({  
+         url:'<?php echo site_url("admin/exam/questionAjax/");?>'+id,   
+         type:'POST', 
+         data:{
+            'id':id,
+            'action':'sections'
+          }, 
+         dataType:'json', 
+         async : false, //默认为true 异步  
+         success:function(data){  
+           if(data.status=='1'){
+              var html = addData_html(data.selectdata.sections);
+              section.innerHTML=html; 
+           }else{
+              alert(data.msg);
+           }
+         }             
+       }); 
+  }
+  var clearfix=document.getElementById("js_clearfix");      
+  section.onchange=function(){
+    var id=this.options[this.selectedIndex].value;
+    $.ajax({  
+         url:'<?php echo site_url("admin/exam/questionAjax/");?>'+id,   
+         type:'POST', 
+         data:{
+            'id':id,
+            'action':'knows'
+          }, 
+         dataType:'json', 
+         async : false, //默认为true 异步  
+         success:function(data){  
+           if(data.status=='1'){
+              console.log(data);
+              var html = addDtag_html(data.selectdata.knows);
+              clearfix.innerHTML=html; 
+           }else{
+              alert(data.msg);
+           }
+         }             
+       });
+  }
+  function addData_html(data){    
+    var _lenght = data.length;
+    var _html = '';
+    _html +="<option>选择章节</option>";
+    if (_lenght > 0) {
+      for (var i = 0; i < _lenght; i++) {
+            _html +="<option value='"+data[i].id+"' title='"+data[i].id+"'>"+data[i].name+"</option>"; 
+      }
+    }
+    return _html;
+  }
+  function addDtag_html(data){    
+    var _lenght = data.length;
+    var _html = '';
+    if (_lenght > 0) {
+      for (var i = 0; i < _lenght; i++) {
+            _html +="<a value='"+data[i].id+"' title='"+data[i].name+"' href='javascript:void(0);'><span>"+data[i].name+"</span><em></em></a>"; 
+      }
+    }
+    return _html;
+  }
+
+  //点击提交按钮时。将已选择的关键字添加到隐藏标签input name=keyword中
+  var str="";
+  $("form").submit(function(){     
+    if($("#myTags a").length!=0){      
+      $("#myTags a").each(function(){
+        str+=$(this).attr("value")+",";
+      });
+      $("input[name='knows_id']").val(str.substring(0,str.length-1));
+    }else{
+      alert("请选择知识点");
+      return false;
+    }    
+  });
+</script>
+</body>
+</html>
