@@ -2,134 +2,131 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
-| -------------------------------------------------------------------
-| AUTO-LOADER
-| -------------------------------------------------------------------
-| This file specifies which systems should be loaded by default.
-|
-| In order to keep the framework as light-weight as possible only the
-| absolute minimal resources are loaded by default. For example,
-| the database is not connected to automatically since no assumption
-| is made regarding whether you intend to use it.  This file lets
-| you globally define which systems you would like loaded with every
-| request.
-|
-| -------------------------------------------------------------------
-| Instructions
-| -------------------------------------------------------------------
-|
-| These are the things you can load automatically:
-|
-| 1. Packages
-| 2. Libraries
-| 3. Drivers
-| 4. Helper files
-| 5. Custom config files
-| 6. Language files
-| 7. Models
-|
-*/
+ | -------------------------------------------------------------------
+ | 自动-加载
+ | -------------------------------------------------------------------
+ | 这个文件指定哪些系统应该默认加载。
+ | 为了保持框架轻质可能只有
+ | 绝对最小的资源默认加载。例如,
+ | 数据库没有连接到自动因为没有假设
+ | 是否你打算使用它了。这个文件让
+ | 你全局定义你想装个系统请求。
+ | -------------------------------------------------------------------
+ | 指令
+ | -------------------------------------------------------------------
+ |
+ | 这些是你可以自动装载的东西：
+ |
+ | 1. Packages-包装
+ | 2. Libraries-图书馆
+ | 3. Drivers-驱动
+ | 4. Helper files-辅助文件
+ | 5. Custom config files-自定义配置文件
+ | 6. Language files -语言文件
+ | 7. Models-模型
+ |
+ */
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Packages
-| -------------------------------------------------------------------
-| Prototype:
-|
-|  $autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');
-|
-*/
+ | -------------------------------------------------------------------
+ |  自动加载包
+ | -------------------------------------------------------------------
+ |  原型:
+ |
+ |  $autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');
+ |
+ */
 $autoload['packages'] = array();
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Libraries
-| -------------------------------------------------------------------
-| These are the classes located in system/libraries/ or your
-| application/libraries/ directory, with the addition of the
-| 'database' library, which is somewhat of a special case.
-|
-| Prototype:
-|
-|	$autoload['libraries'] = array('database', 'email', 'session');
-|
-| You can also supply an alternative library name to be assigned
-| in the controller:
-|
-|	$autoload['libraries'] = array('user_agent' => 'ua');
-*/
-$autoload['libraries'] = array();
+ | -------------------------------------------------------------------
+ |  自动-加载库
+ | -------------------------------------------------------------------
+ | 这些是位于 system/libraries/ 或 aplication/libraries/ directory,
+ | 加入数据库的库，这是一种特殊的情况。
+ |
+ | 原型:
+ |
+ |	$autoload['libraries'] = array('database', 'email', 'session');
+ |
+ | 你也可以被分配给另一个库的名字
+ | 在控制器：
+ |
+ |	$autoload['libraries'] = array('user_agent' => 'ua');
+ */
+//$autoload['libraries'] = array('database', 'email', 'session','globals','captcha');
+
+$autoload['libraries'] = array('database','session');
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Drivers
-| -------------------------------------------------------------------
-| These classes are located in system/libraries/ or in your
-| application/libraries/ directory, but are also placed inside their
-| own subdirectory and they extend the CI_Driver_Library class. They
-| offer multiple interchangeable driver options.
-|
-| Prototype:
-|
-|	$autoload['drivers'] = array('cache');
-|
-| You can also supply an alternative property name to be assigned in
-| the controller:
-|
-|	$autoload['drivers'] = array('cache' => 'cch');
-|
-*/
+ | -------------------------------------------------------------------
+ |  自动-加载库
+ | -------------------------------------------------------------------
+ | 这类位于 system/libraries/ 或者 application/libraries/ directory,
+ | 但也放在里面。自己的子目录，并延续ci_driver_library类。他们
+ | 提供多个可互换的驱动器选项。
+ |
+ | 原型:
+ |
+ |	$autoload['drivers'] = array('cache');
+ |
+ | 你也可以被分配在供应替代属性名称
+ | 控制器：
+ |
+ |	$autoload['drivers'] = array('cache' => 'cch');
+ |
+ */
 $autoload['drivers'] = array();
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Helper Files
-| -------------------------------------------------------------------
-| Prototype:
-|
-|	$autoload['helper'] = array('url', 'file');
-*/
-$autoload['helper'] = array();
+ | -------------------------------------------------------------------
+ |  自动加载辅助文件
+ | -------------------------------------------------------------------
+ | 原型:
+ |
+ |	$autoload['helper'] = array('url', 'file');
+ */
+$autoload['helper'] = array('url','common');
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Config files
-| -------------------------------------------------------------------
-| Prototype:
-|
-|	$autoload['config'] = array('config1', 'config2');
-|
-| NOTE: This item is intended for use ONLY if you have created custom
-| config files.  Otherwise, leave it blank.
-|
-*/
+ | -------------------------------------------------------------------
+ |  自动加载配置文件
+ | -------------------------------------------------------------------
+ | 原型:
+ |
+ |	$autoload['config'] = array('config1', 'config2');
+ |
+ | 注意：此项仅用于您已创建的自定义项。
+ | 配置文件。否则，留空。
+ |
+ */
 $autoload['config'] = array();
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Language files
-| -------------------------------------------------------------------
-| Prototype:
-|
-|	$autoload['language'] = array('lang1', 'lang2');
-|
-| NOTE: Do not include the "_lang" part of your file.  For example
-| "codeigniter_lang.php" would be referenced as array('codeigniter');
-|
-*/
+ | -------------------------------------------------------------------
+ |  自动加载语言文件
+ | -------------------------------------------------------------------
+ | 原型:
+ |
+ |	$autoload['language'] = array('lang1', 'lang2');
+ |
+ | 注：不包括“_lang”您的文件的一部分。例如
+ | ”codeigniter_lang .php”将引用as array('codeigniter');
+ |
+ */
 $autoload['language'] = array();
 
 /*
-| -------------------------------------------------------------------
-|  Auto-load Models
-| -------------------------------------------------------------------
-| Prototype:
-|
-|	$autoload['model'] = array('first_model', 'second_model');
-|
-| You can also supply an alternative model name to be assigned
-| in the controller:
-|
-|	$autoload['model'] = array('first_model' => 'first');
-*/
+ | -------------------------------------------------------------------
+ |  自动加载 模型
+ | -------------------------------------------------------------------
+ | 原型:
+ |
+ |	$autoload['model'] = array('first_model', 'second_model');
+ |
+ | 你也可以被分配给另一个型号名称
+ | 在控制器：
+ |
+ |	$autoload['model'] = array('first_model' => 'first');
+ */
 $autoload['model'] = array();

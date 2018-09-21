@@ -2,43 +2,43 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
-|--------------------------------------------------------------------------
-| Display Debug backtrace
-|--------------------------------------------------------------------------
-|
-| If set to TRUE, a backtrace will be displayed along with php errors. If
-| error_reporting is disabled, the backtrace will not display, regardless
-| of this setting
-|
-*/
+ |--------------------------------------------------------------------------
+ | 显示调试回溯
+ | --------------------------------------------------------------------------
+ |
+ | 如果设置为true，一个回溯将随着PHP错误显示。如果
+ | error_reporting是不可以的，回溯将不显示，无论
+ | 此设置
+ |
+ */
 defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
 
 /*
-|--------------------------------------------------------------------------
-| File and Directory Modes
-|--------------------------------------------------------------------------
-|
-| These prefs are used when checking and setting modes when working
-| with the file system.  The defaults are fine on servers with proper
-| security, but you may wish (or even need) to change the values in
-| certain environments (Apache running a separate process for each
-| user, PHP under CGI with Apache suEXEC, etc.).  Octal values should
-| always be used to set the mode correctly.
-|
-*/
+ |--------------------------------------------------------------------------
+ | 文件和目录模式
+ | --------------------------------------------------------------------------
+ |
+ | 这些首选项时使用的检查和设置模式工作时
+ | 与文件系统。正确的服务器上的默认值很好。
+ | 安全，但是你可能希望（或需要）改变价值观
+ | 某些环境（Apache运行一个单独的过程为每
+ | 用户，PHP的CGI和Apache suexec下，等）。八进制值
+ | 始终使用正确的模式。
+ |
+ */
 defined('FILE_READ_MODE')  OR define('FILE_READ_MODE', 0644);
 defined('FILE_WRITE_MODE') OR define('FILE_WRITE_MODE', 0666);
 defined('DIR_READ_MODE')   OR define('DIR_READ_MODE', 0755);
 defined('DIR_WRITE_MODE')  OR define('DIR_WRITE_MODE', 0755);
 
 /*
-|--------------------------------------------------------------------------
-| File Stream Modes
-|--------------------------------------------------------------------------
-|
-| These modes are used when working with fopen()/popen()
-|
-*/
+ |--------------------------------------------------------------------------
+ | 文件流模式
+ | --------------------------------------------------------------------------
+ |
+ | 这些方式的运用与fopen() / popen()时
+ |
+ */
 defined('FOPEN_READ')                           OR define('FOPEN_READ', 'rb');
 defined('FOPEN_READ_WRITE')                     OR define('FOPEN_READ_WRITE', 'r+b');
 defined('FOPEN_WRITE_CREATE_DESTRUCTIVE')       OR define('FOPEN_WRITE_CREATE_DESTRUCTIVE', 'wb'); // truncates existing file data, use with care
@@ -49,30 +49,30 @@ defined('FOPEN_WRITE_CREATE_STRICT')            OR define('FOPEN_WRITE_CREATE_ST
 defined('FOPEN_READ_WRITE_CREATE_STRICT')       OR define('FOPEN_READ_WRITE_CREATE_STRICT', 'x+b');
 
 /*
-|--------------------------------------------------------------------------
-| Exit Status Codes
-|--------------------------------------------------------------------------
-|
-| Used to indicate the conditions under which the script is exit()ing.
-| While there is no universal standard for error codes, there are some
-| broad conventions.  Three such conventions are mentioned below, for
-| those who wish to make use of them.  The CodeIgniter defaults were
-| chosen for the least overlap with these conventions, while still
-| leaving room for others to be defined in future versions and user
-| applications.
-|
-| The three main conventions used for determining exit status codes
-| are as follows:
-|
-|    Standard C/C++ Library (stdlibc):
-|       http://www.gnu.org/software/libc/manual/html_node/Exit-Status.html
-|       (This link also contains other GNU-specific conventions)
-|    BSD sysexits.h:
-|       http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=sysexits
-|    Bash scripting:
-|       http://tldp.org/LDP/abs/html/exitcodes.html
-|
-*/
+ |--------------------------------------------------------------------------
+ | 退出状态码
+ | --------------------------------------------------------------------------
+ |
+ | 用来指示下，剧本是exit()的条件。
+ | 虽然是错误代码没有统一的标准，有一些
+ | 广阔的公约。下述三项公约如下
+ | 那些希望利用他们。CodeIgniter的违约
+ | 选为这些公约至少重叠，同时还
+ | 留给别人能在未来的版本中，用户定义的房间
+ | 应用。
+ |
+ | 用于确定退出状态码三大公约
+ | 如下：
+ |
+ | 标准C / C++库（stdlibc）：
+ | http://www.gnu.org/software/libc/manual/html_node/exit-status.html
+ |（这个链接也包含其他GNU的具体约定）
+ | BSD sysexits。H：
+ | http://www.gsp.com/cgi-bin/man.cgi？第= 3 = sysexits话题
+ | Bash脚本：
+ | http://tldp.org/ldp/abs/html/exitcodes.html
+ |
+ */
 defined('EXIT_SUCCESS')        OR define('EXIT_SUCCESS', 0); // no errors
 defined('EXIT_ERROR')          OR define('EXIT_ERROR', 1); // generic error
 defined('EXIT_CONFIG')         OR define('EXIT_CONFIG', 3); // configuration error
@@ -83,3 +83,21 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+//验证码常量NOW_TIME
+defined('NOW_TIME') OR define('NOW_TIME', time());
+
+
+//定义系统相关常量
+define('THEMES_HOME_DIR','themes_home/');//前台HTML模板位置
+define('THEMES_SHOP_DIR','themes_shop/');//前台商户HTML模板位置
+//定义后台的视图，css，js，img的路径
+define('ADMIN_RES_PATH','public/admin_res_path/');
+//定义前台的视图，css，js，img的路径
+define('HOME_RES_PATH','public/home_res_path/');
+//webupload的js的路径
+define('WEBUPLOAD_RES_PATH','resource/webupload/');
+//图片上传的路径
+define('PUBLIC_FILE_PATH','public_file');
+
+
