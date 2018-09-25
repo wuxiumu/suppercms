@@ -1,0 +1,283 @@
+<?php  include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+<!--图标样式-->
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/bootstrap_shu.min.css');?>" type="text/css" rel="stylesheet" />
+<!--主要样式-->
+<style>
+	.tree {
+	    min-height:20px;
+	    padding:19px;
+	    margin-bottom:20px;
+	    background-color:#fbfbfb;
+	    border:1px solid #999;
+	    -webkit-border-radius:4px;
+	    -moz-border-radius:4px;
+	    border-radius:4px;
+	    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05)
+	}
+	.tree li {
+	    list-style-type:none;
+	    margin:0;
+	    padding:10px 5px 0 5px;
+	    position:relative
+	}
+	.tree li::before, .tree li::after {
+	    content:'';
+	    left:-20px;
+	    position:absolute;
+	    right:auto
+	}
+	.tree li::before {
+	    border-left:1px solid #999;
+	    bottom:50px;
+	    height:100%;
+	    top:0;
+	    width:1px
+	}
+	.tree li::after {
+	    border-top:1px solid #999;
+	    height:20px;
+	    top:25px;
+	    width:25px
+	}
+	.tree li span {
+	    -moz-border-radius:5px;
+	    -webkit-border-radius:5px;
+	    border:1px solid #999;
+	    border-radius:5px;
+	    display:inline-block;
+	    padding:3px 8px;
+	    text-decoration:none
+	}
+	.tree li.parent_li>span {
+	    cursor:pointer
+	}
+	.tree>ul>li::before, .tree>ul>li::after {
+	    border:0
+	}
+	.tree li:last-child::before {
+	    height:30px
+	}
+	.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+	    background:#eee;
+	    border:1px solid #94a0b4;
+	    color:#000
+	}
+</style>
+<script type="text/javascript">
+    $(function(){
+        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+        $('.tree li.parent_li > span').on('click', function (e) {
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            if (children.is(":visible")) {
+                children.hide('fast');
+                $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+            } else {
+                children.show('fast');
+                $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+            }
+            e.stopPropagation();
+        });
+    });
+</script>
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：栏目管理</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+        <tr>
+          <td width="10%" align="center" valign="middle" style="text-align:right; width:150px;"><a href="/index.php/admin/column/add" target="mainFrame" onFocus="this.blur()" class="add">新增栏目</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <div style="margin-top: 10px;margin-bottom: 10px">
+        <a href="javascript:;" onclick="all_zhankai()">全部展开</a>
+        <a href="javascript:;" onclick="all_zhedie()">全部折叠</a>
+      </div>
+      <div class="tree well">
+        <ul>           
+            <?php foreach ($tree as $item): ?>
+            <li id="<?php echo $item['id']?>">
+	            <span><i class="icon-folder-open"></i><?php echo $item['title']?></span> &nbsp;&nbsp;&nbsp;
+	            [<?php switch($item['type_id']){
+					case '1':
+						echo '栏目';
+						break;
+					case '2':
+						echo '文章';
+						break;
+					case '3':
+						echo '表单';
+						break;
+				}?>]
+				<a href="javascript:;"  class="js_add">【添加】</a>
+	            <a href="javascript:;"  class="js_update">【编辑】</a>
+	            <a href="javascript:;" class="js_display">【<?php  if($item['display']=='1'){ echo "显示"; }else{ echo "隐藏"; } ?>】</a>
+	            <a href="javascript:;" class="js_delete">【删除】</a>
+	            <a href="javascript:;">当前排序：<?php echo $item["ord"];?></a>
+	            <?php foreach ($item['children'] as $itemc): ?>
+	            <ul>
+	              <li id="<?php echo $itemc['id']?>">
+	                <span><i class="icon-minus-sign"></i><?php echo $itemc['title']?> </span>&nbsp;&nbsp;&nbsp;
+		            [<?php switch($itemc['type_id']){
+					case '1':
+						echo '栏目';
+						break;
+					case '2':
+						echo '文章';
+						break;
+					case '3':
+						echo '表单';
+						break;
+					}?>]
+	                <a href="javascript:;"  class="js_add">【添加】</a>
+		            <a href="javascript:;"  class="js_update">【编辑】</a>
+		            <a href="javascript:;" class="js_display">【<?php  if($itemc['display']=='1'){ echo "显示"; }else{ echo "隐藏"; } ?>】</a>
+		            <a href="javascript:;" class="js_delete">【删除】</a>
+	                <a href="javascript:;" style="margin-left: 10px;">当前排序：<?php echo $itemc['ord']?></a>   
+	                <?php foreach ($itemc['children'] as $itemcs): ?>
+		            <ul>
+		              <li  id="<?php echo $itemcs['id']?>">
+		                <span><i class="icon-minus-sign"></i><?php echo $itemcs['title']?> </span>&nbsp;&nbsp;&nbsp;
+			            [<?php switch($itemcs['type_id']){
+					case '1':
+						echo '栏目';
+						break;
+					case '2':
+						echo '文章';
+						break;
+					case '3':
+						echo '表单';
+						break;
+						}?>]
+		                <a href="javascript:;"  class="js_add">【添加】</a>
+			            <a href="javascript:;"  class="js_update">【编辑】</a>
+			            <a href="javascript:;" class="js_display">【<?php  if($itemcs['display']=='1'){ echo "显示"; }else{ echo "隐藏"; } ?>】</a>
+			            <a href="javascript:;" class="js_delete">【删除】</a>
+		                <a href="javascript:;" style="margin-left: 10px;">当前排序：<?php echo $itemcs['ord']?></a>  
+		                <?php foreach ($itemcs['children'] as $itemcss): ?>
+			            <ul>
+			               <li id="<?php echo $itemcss['id']?> ">
+			                <span><i class="icon-minus-sign"></i><?php echo $itemcss['title']?> </span>&nbsp;&nbsp;&nbsp;
+			            [<?php switch($itemcss['type_id']){
+					case '1':
+						echo '栏目';
+						break;
+					case '2':
+						echo '文章';
+						break;
+					case '3':
+						echo '表单';
+						break;
+						}?>]
+			                <a href="javascript:;"  class="js_add">【添加】</a>
+				            <a href="javascript:;"  class="js_update">【编辑】</a>
+				            <a href="javascript:;" class="js_display">【<?php  if($itemcss['display']=='1'){ echo "显示"; }else{ echo "隐藏"; } ?>】</a>
+				            <a href="javascript:;" class="js_delete">【删除】</a>
+			                <a href="javascript:;" style="margin-left: 10px;">当前排序：<?php echo $itemcss['ord']?></a>   		              
+			              </li>        
+			            </ul>
+			            <?php endforeach; ?> 		                 		              
+		              </li>        
+		            </ul>
+		            <?php endforeach; ?> 
+	              </li>           
+	            </ul>
+	            <?php endforeach; ?>            
+            </li>
+			<?php endforeach; ?>                    
+        </ul>
+      </div>
+    </td>
+  </tr>
+</table>
+<!-- Javascript Libraries -->
+        <script type="text/javascript">
+            function all_zhedie() {
+                $('.tree li.parent_li > span').each(function (e) {
+                    var children = $(this).parent('li.parent_li').find(' > ul > li');
+                    children.hide('fast');
+                    $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+                    // e.stopPropagation();
+                })
+            }
+            function all_zhankai() {
+                $('.tree li.parent_li > span').each(function (e) {
+                    var children = $(this).parent('li.parent_li').find(' > ul > li');
+                    children.show('fast');
+                    $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+                    // e.stopPropagation();
+                })
+            }
+            $(".js_delete").click(function(){  
+            	var r=confirm("删除前请确认"); 
+				if (r==true){ 
+				    //执行
+				}else{ 
+				    return false;//取消
+				}
+        		var _this=$(this);
+			    var id=_this.parent().attr("id");
+			    $.ajax({  
+			     url:'<?php echo site_url("admin/column/delete");?>',   
+			     type:'POST', 
+			     data:{
+			     	'id':id,
+	          		'action':'delete'
+	          	 }, 
+			     dataType:'json', 
+			     async : false, //默认为true 异步  
+			     success:function(data){  
+			     	if(data=='1'){
+			     		_this.parent().remove();
+			     	}
+			     }				     
+			   });  
+            });            
+            $(".js_update").click(function(){  
+                var _this=$(this);
+				var id=_this.parent().attr("id");
+				window.location="<?php echo site_url('admin/column/mod/');?>"+id;
+			}); 
+            $(".js_add").click(function(){  
+                var _this=$(this);
+				var id=_this.parent().attr("id");
+				window.location="<?php echo site_url('admin/column/add/');?>"+id;
+			});             
+            $(".js_display").click(function(){  
+                var _this=$(this);
+				var id = _this.parent().attr("id");
+				var text = _this.html().trim();
+				    $.ajax({  
+				     url:'<?php echo site_url("admin/column/delete");?>',   
+				     type:'POST', 
+				     data:{
+				     	'id':id,
+		          		'action':'display'
+		          	 }, 
+				     dataType:'json', 
+				     async : false, //默认为true 异步  
+				     success:function(data){  
+				     	if(data=='1'){
+				     		if(text=='【显示】'){
+				     			_this.html('【隐藏】');
+				     		}else{
+				     			_this.html('【显示】');
+				     		}
+				     	}
+				     }				     
+				   });               
+            });            
+        </script>
+</body>
+</html>
