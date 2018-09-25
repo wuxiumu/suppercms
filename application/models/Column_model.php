@@ -17,6 +17,28 @@ class Column_model extends CI_Model{
         parent::__construct();
         $this->load->database();
     }
+    /***************************************************************
+     * 栏目模型 栏目管理
+     *
+     **************************************************************/
+    /**
+     * 获取栏目信息
+     *
+     * @var   pid  栏目父亲id
+     * @param string $Where
+     * @var   status=1  正常状态
+     * @return array
+     */
+    public function reslutColumn($Where)
+    {
+        $data['column']= $this->db
+        ->select('*')
+        ->where($Where)
+        ->from('column')
+        ->get()
+        ->result_array();
+        return $data;
+    }
     /** 
      * 获取栏目信息
      * 

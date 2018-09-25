@@ -165,6 +165,16 @@ class Column extends Admin_Controller {
             echo $re;
         }
     } 
+    public function columnTree(){
+        $path = '0';
+        $where="path like '%$path%' ";
+        /* $where="path like '%$path%' AND status=1"; */
+        $sql = "SELECT * FROM bro_column WHERE ".$where." ORDER BY ord ASC";
+        $res_sql = $this->db->query($sql);
+        $data['column']  = $res_sql->result_array(); 
+        $data['tree'] = $this->getTree($data['column'], $pid = 0, $level = 0);
+        $this->load->view('admin/column/column_tree.html',$data);
+    }
     //一级栏目
     public function columnOne()
     {
@@ -213,5 +223,33 @@ class Column extends Admin_Controller {
             $html .= "<option value='".$value['id']."' path='".$value['path']."' title='".$value['description']."'>".$value['title']."</option>";
         }          
         echo $html;      
+    }
+    /**
+     * 无限极分类树 getTree($categories)
+     * @param array $data
+     * @param int $pid
+     * @param int $level
+     * @return array
+     */
+    function getTree($data = [], $pid = 63, $level = 0)
+    {
+        $tree = [];
+        if ($data && is_array($data)) {
+            foreach ($data as $v) {
+                if ($v['pid'] == $pid) {
+                    $tree[] = [
+                        'id' => $v['id'],
+                        'level' => $level,
+                        'title' => $v['title'],
+                        'pid' => $v['pid'],
+                        'ord' => $v['ord'],
+                        'type_id' => $v['type_id'],
+                        'display'=>$v['display'],
+                        'children' => $this->getTree($data, $v['id'], $level + 1),
+                    ];
+                }
+            }
+        }
+        return $tree;
     }
 }
