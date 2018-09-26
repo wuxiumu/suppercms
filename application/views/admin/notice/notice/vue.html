@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小乐定制：嘚瑟图片编辑</title>
+  <script src="/dev_/js/jquery-3.3.1.min.js"></script>
+  <script src="/resource/node_modules/vue/dist/vue.min.js"></script>
+
+</head>
+
+<body>
+  <div>
+    <div class="calendar-maker" style="width: 70%; margin: 0 auto;">
+      <background-editor 
+      fetch-api="/index.php/admin/notice/mod_img_vue_get/<?php echo $notice['id']?>/" 
+      submit-api="/index.php/admin/notice/mod_img_vue_save/<?php echo $notice['id']?>/">
+        
+      </background-editor>
+    </div>
+  </div>
+  <script src="/dev_/dist/editor.js"></script>
+</body>
+</html>

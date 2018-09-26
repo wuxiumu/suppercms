@@ -1,0 +1,206 @@
+<?php include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/list.css');?>" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/public/admin_res_path/js/jquery.min.js"></script>
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：前端管理>>模板组列表</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="search">
+        <tr>
+          <td width="90%" align="left" valign="middle">
+
+          </td>
+          <td width="10%" align="center" valign="middle" style="text-align:right; width:150px;">
+          	<a href="<?php echo site_url('admin/notice/add');?>" target="mainFrame" onFocus="this.blur()" class="add">前端展示组</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+        <tr>
+          <th align="center" valign="middle" class="borderright" title="点击更新排序" style="cursor:pointer;" onclick="ord(1)">排序号</th>
+          <th align="center" valign="middle" class="borderright">名称</th>
+          <th align="center" valign="middle" class="borderright">描述</th>
+          <th align="center" valign="middle" class="borderright">添加时间</th>
+          <th align="center" valign="middle" class="borderright">更新时间</th>
+          <th align="center" valign="middle">操作</th>
+        </tr>
+        <?php foreach ($notice as $item): ?>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="center" valign="middle" class="borderright borderbottom" title="<?php echo $item['id'];?>">  
+            	<input class="id_mod" type="hidden" name="id[]" value="<?php echo $item['id'];?> ">
+            	<input class="ord_mod" type="text" name="ord[]" value="<?php echo $item['ord'];?> " style="width: 30px;">
+            </td>
+            <td align="center" valign="middle" class="borderright borderbottom"> 
+            	<input id="js_title<?php echo $item['id'];?> "  type="text" name="title" value="<?php echo $item['title'];?> " onblur="getVal(this.id,<?php echo $item['id'];?>)" style="width:98%;height:20px;" >
+            </td>
+            <td align="center" valign="middle" class="borderright borderbottom">
+            	<textarea id="js_description<?php echo $item['id'];?>" class="form-control" name="description" style="width:98%;height:20px;"  onblur="getVal(this.id,<?php echo $item['id'];?>)"><?php echo $item['description'];?> </textarea>
+            </td>
+ 
+            <td align="center" valign="middle" class="borderright borderbottom">  
+              <?php echo date("Y-m-d",$item['create_time']);?>  
+            </td>
+            <td align="center" valign="middle" class="borderright borderbottom"> 
+              <?php if(!empty($item['update_time'])){ echo date("Y-m-d",$item['update_time']); }else{ echo "未更新"; } ?>
+            </td>
+            <td align="center" valign="middle" class="borderbottom">
+				<a onclick="display(<?php echo $item['id'].','.$item['display'];?>)"> 
+					<?php if($item['display']=="1"){ 
+						echo '显示'; 
+				    }else if($item['display']=="2"){ 
+						echo "隐藏"; 
+				    }?>
+				 </a>
+				<span class="gray">&nbsp;|&nbsp;</span>
+				<a onclick="del(<?php echo $item['id'];?>)">删除</a>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    
+  </tr>
+</table>
+<script type="text/javascript">
+    function getVal(id,mod_id)
+    {
+        var  v= document.getElementById(id).value;
+        var  k=document.getElementById(id).name;
+        var  id="2";
+        $.ajax({  
+          url:'<?php echo site_url('admin/notice/mod');?>',  
+          type:'post',  
+          data:{
+          	"status":"mod_change",
+            "v":v,
+            "k":k,
+            "id":mod_id
+          },  
+          dataType:'text', 
+          async : false, //默认为true 异步  
+          error:function(){  
+            alert('error');  
+          },  
+          success:function(data){  
+            console.log(data);
+               if(data=="1"){
+            	   icon_mess();
+                 // alert('更新成功');
+                 // location.reload();
+               }else{
+                 alert('更新失败');
+               }
+          }
+        });
+    }
+
+    function ord(a)
+    {    	 
+        var id_arr='';
+        var ord_arr='';
+        var id_mod=$(".id_mod");
+        var ord_mod=$(".ord_mod");
+        for (var i=0; i<id_mod.length; i++){
+            id_arr+=id_mod.eq(i).val()+"/";
+            ord_arr+=ord_mod.eq(i).val()+"/";            
+        }
+         $.ajax({  
+          url:'<?php echo site_url('admin/notice/mod');?>',  
+          type:'post',  
+          data:{
+          	"status":"mod_ord",
+            "id_arr":id_arr,
+            "ord_arr":ord_arr
+        },  
+          dataType:'text', 
+          async : false, //默认为true 异步  
+          error:function(){  
+            alert('error');  
+          },  
+          success:function(data){  
+           console.log(data);
+           if(data=="1"){
+             alert('更新成功');
+             location.reload();
+           }else{
+             alert('更新失败');
+           }
+          }
+        });         
+    }
+
+    function del(id)
+    {
+        $.ajax({  
+          url:'<?php echo site_url('admin/notice/mod');?>',  
+          type:'post',  
+          data:{
+          	"status":"del",
+            "id":id
+          },  
+          dataType:'text', 
+          async : false, //默认为true 异步  
+          error:function(){  
+            alert('error');  
+          },  
+          success:function(data){  
+           console.log(data);
+           if(data=="1"){
+             alert('删除成功');
+             location.reload();
+           }else{
+             alert('删除失败');
+           }
+          }
+        }); 
+    }
+
+    function display(id,display)
+    {
+         $.ajax({  
+          url:'<?php echo site_url('admin/notice/mod');?>', 
+          type:'post',  
+          data:{
+          	"status":"display",
+          	"display":display,
+            "id":id
+          },  
+          dataType:'text', 
+          async : false, //默认为true 异步  
+          error:function(){  
+            alert('error');  
+          },  
+          success:function(data){  
+           console.log(data);
+           if(data=="1"){
+             alert('更新成功');
+             location.reload();
+           }else{
+             alert('更新失败');
+           }
+          }
+        }); 
+    }    
+</script>
+     <script src="/resource/layui/layui.all.js" charset="utf-8"></script>
+     <script>
+     function icon_mess(){
+          ;!function(){
+  				var layer = layui.layer
+  				,form = layui.form;
+  				layer.msg('修改成功',{icon: 6});
+			}();
+     }		
+	</script> 
+</body>
+</html>

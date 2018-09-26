@@ -1,0 +1,244 @@
+<?php include  site_url('admin/Login/main_head'); ?>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：前端管理&nbsp;&nbsp;>&nbsp;&nbsp;添加内容</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <form method="post" action="<?php if(!empty($notice['id'])){ echo site_url('admin/notice/mod_content'); }else{ echo site_url('admin/notice/add_content'); } ?>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">前端显示组：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">            <div class="col-sm-9">
+      	 			 <?php echo $gettree;?>
+      			</div>
+            </td>
+          </tr>   
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">图片：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+                  <img id="js_img" src="<?php  if(!empty($notice['image'])){ echo $notice['image']; }else{ echo '/public/admin_res_path/images/20180829152752_263.png';}  ?>" style="width:30%;">
+                    <div id="uploader" >
+                      <ul id="theList" style="display: none;"></ul>
+                      <div id="picker" style="  background: #00b7ee;
+                                                border-radius: 3px;
+                                                cursor: pointer; 
+                                                border: none;
+                                                color: white;
+                                                padding: 15px 32px;
+                                                text-align: center;
+                                                text-decoration: none;
+                                                display: inline-block;
+                                                font-size: 16px;"><?php  if(empty($notice['image'])){ echo "添加图片（1080*710px）"; }else{echo "修改图片（1080*710px）"; }  ?></div>  
+                      <div style="  background: red;
+                                    border-radius: 3px;
+                                    cursor: pointer; 
+                                    border: none;
+                                    color: white;
+                                    padding: 15px 32px;
+                                    text-align: center;
+                                    text-decoration: none;
+                                    display: inline-block;
+                                    font-size: 16px;" onclick="del()">删除</div>                                                                 
+                    </div>
+            </td>
+          </tr>  
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">网址：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="url" value="<?php echo $notice['url'];?>" class="text-word"  style="width:100%;">
+              <?php echo form_error('url', '<span>', '</span>') ?>
+            </td>
+          </tr>                   
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">名称：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="title" value="<?php echo $notice['title'];?>" class="text-word"  style="width:100%;">
+              <?php echo form_error('title', '<span>', '</span>') ?>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">描述：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <textarea id="js_description" class="form-control" name="description" style="width:100%;height:80px;"> <?php echo $notice['description'];?></textarea>
+              <?php echo form_error('description', '<span>', '</span>') ?>
+            </td>
+          </tr>
+         
+          
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">排序：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="ord" value="<?php echo $notice['ord'];?>" class="text-word">
+              <?php echo form_error('ord', '<span>', '</span>') ?>
+            </td>
+          </tr>                    
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">是否显示：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+             <div class="col-md-12">
+			    <div class="form-group">
+			        <div class="col-sm-9">
+			            <label class="radio-inline">
+			                <input type="radio" checked="" value="1"   name="display">显示</label>
+			            <label class="radio-inline">
+			                <input type="radio" value="2"  name="display">隐藏</label>
+			        </div>
+			    </div>
+			</div>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">&nbsp;</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input name="id" type="hidden" value="<?php echo $notice['id'];?>">
+             <input style=" background-color: #4CAF50; /* Green */  
+                                                      border-radius: 3px;
+                                                      cursor: pointer; 
+                                                      border: none;
+                                                      color: white;
+                                                      padding: 15px 32px;
+                                                      text-align: center;
+                                                      text-decoration: none;
+                                                      display: inline-block;
+                                                      font-size: 16px;" name="" type="submit" value="提交">
+            <!--   <input name="" type="reset" value="重置" class="text-but"> -->
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+    <link rel="stylesheet" href="<?php echo base_url(WEBUPLOAD_RES_PATH.'css/webuploader.css');?>" />
+    <script type="text/javascript" src="<?php echo base_url(ADMIN_RES_PATH.'js/jquery.min.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url(ADMIN_RES_PATH.'js/function_public.js');?>"></script>
+    <script src="<?php echo base_url(WEBUPLOAD_RES_PATH.'js/md5.js');?>" type="text/javascript" charset="utf-8"></script>
+    <script src="<?php echo base_url(WEBUPLOAD_RES_PATH.'webuploader.js');?>" type="text/javascript" charset="utf-8"></script>
+ 
+  
+    <script type="text/javascript">
+      
+      function validate() {
+          if (confirm("提交表单?")) {
+            return true;
+          } else {
+            return false;
+          }
+       }
+        
+       function submitForm() {
+          if (validate()) {
+            document.getElementById("myForm").submit();
+          }
+       }
+    </script>
+    <script>
+      
+      /**
+       * @id         获取上传图片按钮的点击     
+       * @filetype   img，file 两种模式来区分上传的文件类型
+       * @serverphp  后台执行的PHP程序
+       * @imagetype 文件上传的自定义路径(在根目录public_file下边的自定义)
+       * @fileNumLimit 文件上传的数量
+       * @fileSingleSizeLimit 文件上传的大小
+       */
+        var id=$("#picker");
+        var filetype="img";
+        var serverphp="<?php echo site_url('functionjs/webuploader');?>";
+        var imagetype="image";
+        var fileNumLimit= 1;
+        var fileSingleSizeLimit=10;
+
+        var userInfo = {userId:"kazaff", md5:""};   //用户会话信息
+        var chunkSize = 5000 * 1024;        //分块大小
+      
+            var uploader = WebUploader.create({
+            swf: "../Uploader.swf"
+            , server: serverphp
+            , pick: id
+            , resize: false
+            , disableGlobalDnd: true
+            ,// 只允许选择图片文件。
+            accept: {
+                title: 'HTML5组态文件',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'img/*'
+            }
+            , compress: {
+                quality: 90
+                , allowMagnify: false
+                , crop: false
+                , preserveHeaders: true
+                , noCompressIfLarger: true
+                ,compressSize: 100000
+            }
+            , compress: false
+            , prepareNextFile: true
+            , chunked: true
+            , chunkSize: chunkSize
+            , threads: true
+            , formData: function(){
+                return $.extend(true, {
+                    imagetype:imagetype
+                }, userInfo);
+            }
+            , fileNumLimit: fileNumLimit
+            , fileSingleSizeLimit: fileSingleSizeLimit * 1024 * 1024
+            , duplicate: true
+        });
+        
+        //选择文件开启
+        uploader.on("fileQueued", function(file){
+            uploader.upload();//开始上传方法
+        });
+        //上传出错
+        uploader.on( 'uploadError', function( file ) {
+            alert('上传出错');
+        });
+        //上传失败返回结果
+        uploader.on("error", function (type) {
+            if (type == "Q_TYPE_DENIED") {
+                alert("请上传JPG、PNG、GIF、BMP格式文件");
+            } else if (type == "F_EXCEED_SIZE") {
+                alert("文件大小不能超过10M");
+            }else {
+                alert("上传出错！请检查后重新上传！");
+            }
+        });
+        //上传成功返回结果
+        uploader.on('uploadSuccess',function(file,response){
+            var html="";
+            html+="<input id='js_imgs' type='hidden' name='imgs[]' value='"+response.filename+"'>";
+            html+="<input id='js_imgs_url' type='hidden' name='imgs_url[]' value='"+response.uploadpath+"'>";
+            //html+="<img src='/"+response.uploadpath+"/"+response.filename+"' style='width:30%;'>";
+            var tSrc='/'+response.uploadpath+'/'+response.filename;
+            document.getElementById("js_img").setAttribute("src", tSrc);
+            $("#uploader").append(html);
+            // params.push({"uploadpath":0,"filename":1});
+            // json = JSON.stringify(params);  
+        });
+ 
+
+        function del(){
+            var r=confirm("删除前请确认"); 
+            if (r==true){ 
+                //执行
+            }else{ 
+                return false;//取消
+            }
+            var tSrc = "/public/admin_res_path/images/20180829152752_263.png";
+            document.getElementById("js_img").setAttribute("src", tSrc); 
+            var odiv=document.getElementById("js_imgs");
+            odiv.parentNode.removeChild(odiv);
+            var odiv_=document.getElementById("js_imgs_url");
+            odiv_.parentNode.removeChild(odiv_);
+              
+        }
+    </script>
+</body>
+</html>

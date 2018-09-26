@@ -1,0 +1,103 @@
+<?php include  site_url('admin/Login/main_head'); ?>
+    <script type="text/javascript" charset="utf-8" src="/resource/ueditor/utf8-php/xiaole_ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/resource/ueditor/utf8-php/ueditor.all.min.js"> </script>
+<link href="<?php echo base_url(ADMIN_RES_PATH.'css/info.css');?>" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<!--main_top-->
+<table width="99%" border="0" cellspacing="0" cellpadding="0" id="searchmain">
+  <tr>
+    <td width="99%" align="left" valign="top">您的位置：前端管理&nbsp;&nbsp;>&nbsp;&nbsp;添加内容</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <form method="post" action="<?php if(!empty($notice['id'])){ echo site_url('admin/notice/mod_content'); }else{ echo site_url('admin/notice/add_content'); } ?>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="main-tab">
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">前端显示组：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">            <div class="col-sm-9">
+      	 			 <?php echo $gettree;?>
+      			</div>
+            </td>
+          </tr>   
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">名称：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="title" value="<?php echo $notice['title'];?>" class="text-word"  style="width:100%;">
+              <?php echo form_error('title', '<span>', '</span>') ?>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">描述：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <textarea id="js_description" class="form-control" name="description" style="width:100%;height:80px;"> <?php echo $notice['description'];?></textarea>
+              <?php echo form_error('description', '<span>', '</span>') ?>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">内容：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+	             <div>
+				      <!-- 加载编辑器的容器 -->
+					    <script id="container" name="content" type="text/plain" style="width:100%;"> <?php echo $notice['content'];?></script>
+				</div>
+            </td>
+          </tr>          
+          
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">排序：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input type="text" name="ord" value="<?php echo $notice['ord'];?>" class="text-word">
+              <?php echo form_error('ord', '<span>', '</span>') ?>
+            </td>
+          </tr>                    
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">是否显示：</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+             <div class="col-md-12">
+			    <div class="form-group">
+			        <div class="col-sm-9">
+                  <label class="radio-inline">
+                      <input type="radio"  value="1"   name="display" <?php if($notice['display']=='1'){echo 'checked';} ?>>显示</label>
+                  <label class="radio-inline">
+                      <input type="radio" value="2"  name="display" <?php if($notice['display']=='2'){echo 'checked';} ?>>隐藏</label>
+			        </div>
+			    </div>
+			</div>
+            </td>
+          </tr>
+          <tr onMouseOut="this.style.backgroundColor='#ffffff'" onMouseOver="this.style.backgroundColor='#edf5ff'">
+            <td align="right" valign="middle" class="borderright borderbottom bggray">&nbsp;</td>
+            <td align="left" valign="middle" class="borderright borderbottom main-for">
+              <input name="id" type="hidden" value="<?php echo $notice['id'];?>">
+
+              <input style=" background-color: #4CAF50; /* Green */  
+                                                      border-radius: 3px;
+                                                      cursor: pointer; 
+                                                      border: none;
+                                                      color: white;
+                                                      padding: 15px 32px;
+                                                      text-align: center;
+                                                      text-decoration: none;
+                                                      display: inline-block;
+                                                      font-size: 16px;" name="" type="submit" value="提交">
+
+              <!-- <input name="" type="reset" value="重置" class="text-but"> -->
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+<script type="text/javascript">
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    // var ue = UE.getEditor('editor');
+	var ue = UE.getEditor('container', {
+	    autoHeight: false
+
+	});
+</script>
+</body>
+</html>
